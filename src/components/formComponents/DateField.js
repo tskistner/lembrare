@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { InputGroupAddon, Label } from 'reactstrap';
-import calendar from './../../icons/calendar.png';
+import { Label } from 'reactstrap';
 
 export default class DateField extends Component {
 
@@ -11,10 +10,6 @@ export default class DateField extends Component {
             uiLibrary: 'bootstrap4'
         });
         */
-
-        /**<InputGroupAddon addonType='prepend'>
-                    <img src={calendar} width='40px' alt={this.props.placeholder} />
-                </InputGroupAddon> */
 
         return (
             <div className={'input-group date col-'+this.props.col} data-provide='datepicker'>

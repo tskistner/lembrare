@@ -2,6 +2,7 @@ import React from 'react';
 import { Input, InputGroupAddon, Label } from 'reactstrap';
 
 export default class InputField extends React.Component {
+
     render() {
         let addon, infRequired, icon;
         if (this.props.addon) {
