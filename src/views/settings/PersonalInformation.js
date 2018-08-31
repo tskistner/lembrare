@@ -6,10 +6,11 @@ export default class PersonalInformation extends Component {
 
     render() {
 
-        const header = <header align='center' className='default-header'>
-            <img src={require('../../icons/person-icon-blue.png')} className='default-image' alt='profile' />
-            <h2>Informações pessoais</h2>
-        </header>;
+        const header =
+            <header align='center' className='default-header'>
+                <img src={require('../../icons/person-icon-blue.png')} className='view image' alt='profile' />
+                <h2>Informações pessoais</h2>
+            </header>;
 
         const pInformation =
             <div className='pInformation'>
@@ -45,7 +46,7 @@ export default class PersonalInformation extends Component {
             </div>;
 
         return (
-            <div className='col-12 form-div'>
+            <div className='col-12 view div'>
                 {header}
                 {pInformation}
                 {aInformation}

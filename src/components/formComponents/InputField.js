@@ -9,11 +9,11 @@ export default class InputField extends React.Component {
             addon = <InputGroupAddon addonType="prepend">{this.props.addon}</InputGroupAddon>;
         }
         if (this.props.required) {
-            infRequired = <Label className='required-label'>* </Label>;
+            infRequired = <Label className='input required'>* </Label>;
         }
         if (this.props.icon) {
-            icon = <svg-icon><img src={require('./../../icons/'+this.props.icon)} 
-                alt={this.props.icon} className='img' /></svg-icon>;
+            icon = <svg-icon><img src={require('./../../icons/' + this.props.icon)}
+                alt={this.props.icon} className='input image' /></svg-icon>;
         }
 
         return (

@@ -3,32 +3,36 @@
   background-image: linear-gradient(to right, aqua , blue);
 }
 
-.form-div{
+a.navbar-brand.menu-title {
+  color: white;
+}
+
+.footer.footer-dark {
+  background-color: black;
+  padding: 2%;
+}
+
+.view.div {
   margin: 2%;
   width: 95%;
   padding: 2%; 
   background-color: white;
 }
 
-.img{
-  height: 38px;
-}
-
-a.navbar-brand.menu-title{
-  color: white;
-}
-
-.default-image{
+.view.image {
   width: 20%;
 }
 
-.required-label{
+.input.image {
+  height: 38px;
+}
+
+.input.required {
   color:red;
   font-weight: bold;
 }
 
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.card.image.hover {
+  opacity: 0.5;
 }
+
