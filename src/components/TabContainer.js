@@ -1,31 +1,61 @@
 import React from 'react';
-import { TabPanel, DropDownMenu} from './menuComponents/';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
+import classnames from 'classnames';
 
 export default class TabContainer extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.toggle = this.toggle.bind(this);
+        this.state = {
+            activeTab: this.props.firstTable
+        };
+    }
+
+    toggle(tab) {
+        if (this.state.activeTab !== tab) {
+            this.setState({
+                activeTab: tab
+            });
+        }
+    }
     render() {
-        const tabsPanel = [];
+
+        const tabsV = [];
+        const tabsH = [];
         if (this.props.tabs) {
             for (let i = 0; i < this.props.tabs.length; i++) {
-                if (this.props.tabs[i].type === 'dropdown') {
-                    tabsPanel.push(<DropDownMenu key={i}
-                        tabName={this.props.tabs[i].tabName}
-                        options={this.props.tabs[i].options} />);
-                } else {
-                    tabsPanel.push(<TabPanel key={i}
-                        tabName={this.props.tabs[i].tabName}
-                        index={i}
-                        link={this.props.tabs[i].link} />);
-                }
+                const t = this.props.tabs[i];
+                tabsH.push(
+                    <NavItem key={i}>
+                        <NavLink key={i}
+                            className={classnames({ active: this.state.activeTab === t.id })}
+                            onClick={() => { this.toggle(t.id); }}>
+                            {t.title}
+                        </NavLink>
+                    </NavItem>
+                );
+                tabsV.push(
+                    <TabPane tabId={t.id} key={i}>
+                        <Row key={i}>
+                            <Col sm="12" key={i}>
+                                {t.modeV}
+                            </Col>
+                        </Row>
+                    </TabPane>
+                );
             }
         }
-        return (
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a className="navbar-brand menu-title">Lembrare</a>
 
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    {React.createElement('ul', { className: 'navbar-nav mr-auto' }, tabsPanel)}
-                </div>
-            </nav>
+        return (
+            <div>
+                <Nav tabs>
+                    {tabsH}
+                </Nav>
+                <TabContent activeTab={this.state.activeTab}>
+                    {tabsV}
+                </TabContent>
+            </div>
         );
     }
 }

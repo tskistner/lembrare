@@ -1,4 +1,5 @@
 import React from 'react';
+import GridMode from './viewComponents/GridMode';
 
 export default class View extends React.Component {
 
@@ -63,51 +64,4 @@ export default class View extends React.Component {
             </div>
         );
     }
-}
-
-function GridMode(props) {
-    let head = [];
-    let body = [];
-    if (props.levels) {
-        let i = 0;
-        for (let j = 0; j < props.levels.length; j++) {
-            const cols = props.levels[j].columns;
-            if (cols) {
-                if (props.levels[j].type === 'head') {
-                    head.push(
-                        <thead key={i++}>
-                            <tr key={i++}>
-                                <th></th>
-                                {cols.map(c => <th key={i++} scope='col'>{c.desc}</th>)}
-                            </tr>
-                        </thead>
-                    );
-                } else {
-                    body.push(
-                        <tr key={i++}>
-                            <th key={i++}>
-                                <button key={i++} className='btn btn-light' id={'btn_' + i} onClick={props.handleClick}>
-                                    <img key={i++} src={require('./../icons/edit.svg')} alt='edit' />
-                                </button>
-                            </th>
-                            {cols.map(c => <td key={(i++)}>{c.desc}</td>)}
-                        </tr>
-                    );
-                }
-            }
-        }
-
-    }
-
-    const table =
-        <table className='table table-hover'>
-            {head}
-            <tbody>{body}</tbody>
-        </table>
-
-    return (
-        <div>
-            {table}
-        </div>
-    );
 }

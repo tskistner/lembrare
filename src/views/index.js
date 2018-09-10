@@ -1,3 +1,5 @@
-export { default as PersonalInformation } from './settings/PersonalInformation';
-export { default as AditionalInformation } from './settings/AditionalInformation';
-export { default as Categories } from './activities/Categories';
+export { default as Activities } from './activities/Activities';
+export { default as Settings } from './settings/Settings';
+export { default as Book } from './settings/Book';
+export { default as AddBook } from './settings/AddBook';
+export { default as Home } from './Home';

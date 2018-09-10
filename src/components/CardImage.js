@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Card, CardImg, CardText, CardBody,
+    Card, CardText, CardBody,
     CardTitle
 } from 'reactstrap';
 
@@ -10,7 +10,6 @@ export default class Categories extends React.Component {
         super(props);
         this.onOutImage = this.onOutImage.bind(this);
         this.onOverImage = this.onOverImage.bind(this);
-        this.onClickCard = this.onClickCard.bind(this);
     }
 
     onOverImage() {
@@ -21,27 +20,25 @@ export default class Categories extends React.Component {
         document.getElementById(this.props.id).classList.remove('hover');
     }
 
-    onClickCard() {
-        alert('teste');
-    }
-
     render() {
         return (
-            <div className='col-4'>
-                <Card>
-                    <a>
-                    <CardImg 
-                        id={this.props.id}
-                        className='card image'
+            <div>
+                <Card 
+                className={'card image '+this.props.bgColor} 
+                id={this.props.id}
+                onMouseOver={this.onOverImage}
+                        onMouseOut={this.onOutImage}
+                        onClick={() => this.props.handleClick(this.props.id)}>
+                    {/*<CardImg 
                         onMouseOver={this.onOverImage}
                         onMouseOut={this.onOutImage}
-                        onClick={this.onClickCard}
-                        src={require('./../icons/'+this.props.image+'.jpg')} alt='short' />
+                        onClick={this.props.handleClick}
+                        //src={require('./../icons/'+this.props.image+'.jpg')} alt='short' 
+                        />*/}
                     <CardBody>
                         <CardTitle>{this.props.title}</CardTitle>
                         <CardText>{this.props.description}</CardText>
                     </CardBody>
-                    </a>
                 </Card>
             </div>
         );
