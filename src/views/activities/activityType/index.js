@@ -1,0 +1,9 @@
+export { default as Calculation } from './Calculation';
+export { default as Event } from './Event';
+export { default as FormIdentification } from './FormIdentification';
+export { default as Hour } from './Hour';
+export { default as Image } from './Image';
+export { default as ObjectIdentification } from './ObjectIdentification';
+export { default as PersonalQuestion } from './PersonalQuestion';
+export { default as Sound } from './Sound';
+export { default as Word } from './Word';

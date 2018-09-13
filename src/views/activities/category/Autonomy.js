@@ -1,5 +1,6 @@
 import React from 'react';
 import CategoryService from '../../../service/CategoryService';
+import categories from '../ExcerciseTypeEnum';
 
 export default class Autonomy extends React.Component {
 
@@ -8,9 +9,10 @@ export default class Autonomy extends React.Component {
         this.cs = new CategoryService();
     }
 
-    componentWillMount() {
-        this.cs.getCategoryLevel(res => {
 
+    componentWillMount() {
+        this.cs.getCategoryLevel().then(res => {
+            this.chooseRandomExcercise()
         });
     }
 

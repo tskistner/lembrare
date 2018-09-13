@@ -1,10 +1,8 @@
 .App {
   background-image: url('./../icons/lembrare-bg.png');
-
   /* Full height */
   height: 100%;
   min-height: 200px;
-
   /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
@@ -62,20 +60,52 @@ a.navbar-brand.menu-title {
   background-color: purple;
 }
 
-
-
-.example-component {
-  width: 100px;
-  height: 100px;
-  background-color: red;
-  -webkit-transition: 0.5s;
-  -moz-transition: 0.5s;
-  -o-transition: 0.5s;
-  transition: 0.5s;
-  opacity: 0;
-  visibility: hidden; 
+.button-image {
+  width: 80px;
+  height: 80px;
+  background-color: rgba(255, 255, 255, 0.2);
 }
-.example-component.show {
-  opacity: 1;
-  visibility: visible; 
+
+.button-image.div {
+  height: 70px;
+  width: 70px;
+}
+
+.button-image.div.i1 {
+  background: url('./../icons/excercises/button_1.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.button-image.div.i2 {
+  background: url('./../icons/excercises/button_2.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.button-image.div.i3 {
+  background: url('./../icons/excercises/button_3.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.button-image.div.i4 {
+  background: url('./../icons/excercises/button_4.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.button-image.div.i5 {
+  background: url('./../icons/excercises/button_5.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.button-image.div.color {
+  background-color: blue;
 }

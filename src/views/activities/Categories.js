@@ -10,7 +10,7 @@ export default class Categories extends React.Component {
                 </div>
                 <div className='input-group'>
                     <CardImage
-                        id='card_autonomia'
+                        id='card_autonomy'
                         title='Autonomia'
                         description='Para melhorar sua autonomia....'
                         image='autonomia'
@@ -18,7 +18,7 @@ export default class Categories extends React.Component {
                         handleClick={this.props.handleClick}
                     />
                     <CardImage
-                        id='card_cprazo'
+                        id='card_short'
                         title='Memória de curto prazo'
                         description='Para melhorar sua autonomia....'
                         image='curto_prazo'
@@ -26,7 +26,7 @@ export default class Categories extends React.Component {
                         handleClick={this.props.handleClick}
                     />
                     <CardImage
-                        id='card_lprazo'
+                        id='card_long'
                         title='Memória de longo prazo'
                         description='Para melhorar sua autonomia....'
                         image='longo_prazo'
