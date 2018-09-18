@@ -1,6 +1,6 @@
 import React from 'react';
 import Categories from './Categories';
-import Excercise from './Excercise';
+import Excercise from './Exercise';
 
 export default class View extends React.Component {
 

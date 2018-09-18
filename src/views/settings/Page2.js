@@ -1,33 +1,40 @@
 import React, { Component } from 'react';
+import FileService from './../../service/FileService';
 
 class Page2 extends Component {
 
-
+    handleUploadFile = (event) => {
+        const data = new FormData();
+        //using File API to get chosen file
+        let file = event.target.files[0];
+        console.log("Uploading file", event.target.files[0]);
+        data.append('file', event.target.files[0]);
+        data.append('name', 'my_file');
+        data.append('description', 'this file is uploaded by young padawan');
+        let self = this;
+        //calling async Promise and handling response or error situation
+        FileService.uploadFileToServer(data).then((response) => {
+            console.log("File " + file.name + " is uploaded");
+        }).catch(function (error) {
+            console.log(error);
+            if (error.response) {
+                //HTTP error happened
+                console.log("Upload error. HTTP error/status code=", error.response.status);
+            } else {
+                //some other error happened
+                console.log("Upload error. HTTP error/status code=", error.message);
+            }
+        });
+    };
 
     render() {
         return (
-            <nav class="navbar navbar-inverse">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="index.html">Find My Pet - Cadastro Animal</a>
-                    </div>
-                    <ul class="nav navbar-nav">
-                        <li class=""><a href="index.html">Home</a></li>
-                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Gerenciar Animais <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Incluir Animal</a></li>
-                                <li><a href="CodigoRastreador.html">Codigo Rastreador</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="Cadastro.html"><span class="glyphicon glyphicon-user"></span> Cadastrar</a></li>
-                        <li><a href="Login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    </ul>
-                </div>
-            </nav>
-        );
-    }
+            <div>
+                <input type="file" onChange={this.handleUploadFile} />
+            </div>
+        )
+    };
+
 }
 
 export default Page2;

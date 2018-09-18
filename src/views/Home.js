@@ -9,16 +9,16 @@ export default class Home extends React.Component {
     const itens = [
       { itemName: 'Cadastro', link: 'cadastro' },
       { itemName: 'Atividades', link: 'atividades' },
-      { itemName: 'Book', link: 'book'},
-      { itemName: 'AddBook', link: 'addBook'}
+      { itemName: 'Book', link: 'book' },
+      { itemName: 'AddBook', link: 'addBook' }
     ];
-
+    //<main className='App'>
     return (
       <div >
         <header>
           <MenuContainer itens={itens} />
         </header>
-        <main className='App'>
+        <main>
           <Switch>
             {routes}
           </Switch>

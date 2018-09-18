@@ -18,7 +18,8 @@ export default class Book extends React.Component {
 
     getbooks() {        
         this.bs.getBooks().then(response => {
-            this.setState({books : response.data})
+            //this.setState({books : response.data});
+            console.log(response.data);
         }, () => console.log(this.state));
     }
 
