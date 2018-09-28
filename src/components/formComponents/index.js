@@ -5,4 +5,3 @@ export { default as TAreaField } from './TAreaField';
 export { default as FTextField } from './FTextField';
 export { default as RadioField } from './RadioField';
 export { default as CheckField } from './CheckField';
-export { default as DateField } from './DateField';

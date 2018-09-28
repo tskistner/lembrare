@@ -1,12 +1,74 @@
-.App {
-  background-image: url('./../icons/lembrare-bg.png');
+.default-app {
+  background-image: url('./../icons/lembrare-bg.jpeg');
   /* Full height */
   height: 100%;
-  min-height: 200px;
   /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.btn.btn-secondary.dropdown-toggle.default {
+  background-image: url('./../icons/menu.svg');
+  height: 100%;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.navbar.navbar-expand-lg.default {
+  background-color: black;
+}
+
+.nav-link.default {
+  color: white;
+}
+
+.default-div {
+  margin-left: 1%;
+  margin-right: 1%;
+  background-color: white;
+}
+
+.form-group.default {
+  padding: 5%;
+}
+
+.exercise-question.default {
+  border: 1px solid purple;
+  padding: 3%;
+  text-align: center;
+  font-weight: bold;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.position-relative.form-check.default {
+  padding: 2%;
+  opacity: 0.5;
+  color: white;
+  font-weight: bold;
+}
+
+.position-relative.form-check.default.hover {
+  opacity: 1;
+}
+
+.default.radio {
+  padding: 0.5%;
+}
+
+.position-relative.form-check.default.purple {
+  background-color: purple;
+}
+
+.position-relative.form-check.default.blueviolet {
+  background-color: blueviolet;
+}
+
+.position-relative.form-check.default.orchid {
+  background-color: orchid;
 }
 
 a.navbar-brand.menu-title {
@@ -27,6 +89,11 @@ a.navbar-brand.menu-title {
 
 .view.image {
   width: 20%;
+}
+
+.view.title {
+  border-bottom: 2px solid purple;
+  margin-bottom: 2%;
 }
 
 .input.image {

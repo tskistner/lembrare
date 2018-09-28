@@ -1,27 +1,23 @@
 import React from 'react';
 import { FormGroup, Label, Input } from 'reactstrap';
 
+//PAra buscar valor: document.querySelector('input[name="ie_sexo"]:checked')
 export default class RadioField extends React.Component {
     render() {
-
-        const options = [];
-        for (let i = 0; i < this.props.options.length; i++) {
-            options.push(
-                <FormGroup check key={i}>
-                    <Label check key={i}>
-                        <Input type="radio" key={i}
-                            id={this.props.idInput}
-                            name={this.props.idInput} 
-                            value={this.props.values[i]} />{' '}
-                        {this.props.options[i]} </Label>
-                </FormGroup>
-            );
-        }
+        const options = this.props.options.map((o, i) => {
+            return <FormGroup check key={i}>
+                <Label check key={i}>
+                    <Input type="radio" key={i} value={o.VALUE} name={this.props.idInput} id={this.props.idInput+'_'+o.VALUE} />
+                    {' '}  {o.OPTION} 
+                </Label>
+            </FormGroup>;
+        });
 
         return (
-            <div className={'input-group col-' + this.props.col}>
-                <Label className='col-12'>{this.props.placeholder+':'}</Label>
-                <FormGroup tag="fieldset"  id={this.props.idInput} name={this.props.idInput} >
+            <div className="form-group">
+                {this.props.required}
+                <Label>{this.props.placeholder + ':'}</Label>
+                <FormGroup tag="fieldset" id={this.props.idInput} name={this.props.idInput} >
                     {options}
                 </FormGroup>
             </div>

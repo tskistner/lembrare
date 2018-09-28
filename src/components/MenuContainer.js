@@ -22,13 +22,12 @@ export default class MenuContainer extends React.Component {
             }
         }
         return (
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div className="navbar-brand menu-title">
-                 <Link className='nav-link' to={`${process.env.PUBLIC_URL}/`}> Lembrare </Link>
-                </div>
-
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <nav className='navbar navbar-expand-lg default'>
+                <div className='collapse navbar-collapse' id='navbarSupportedContent'>
                     {React.createElement('ul', { className: 'navbar-nav mr-auto' }, menuItens)}
+                </div>
+                <div className='navbar-brand'>
+                 <Link className='nav-link default' to={`${process.env.PUBLIC_URL}/`}> Lembrare </Link>
                 </div>
             </nav>
         );

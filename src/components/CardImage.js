@@ -23,18 +23,12 @@ export default class Categories extends React.Component {
     render() {
         return (
             <div>
-                <Card 
-                className={'card image '+this.props.bgColor} 
-                id={this.props.id}
-                onMouseOver={this.onOverImage}
-                        onMouseOut={this.onOutImage}
-                        onClick={() => this.props.handleClick(this.props.id)}>
-                    {/*<CardImg 
-                        onMouseOver={this.onOverImage}
-                        onMouseOut={this.onOutImage}
-                        onClick={this.props.handleClick}
-                        //src={require('./../icons/'+this.props.image+'.jpg')} alt='short' 
-                        />*/}
+                <Card
+                    className={'card image ' + this.props.bgColor}
+                    id={this.props.id}
+                    onMouseOver={this.onOverImage}
+                    onMouseOut={this.onOutImage}
+                    onClick={() => this.props.handleClick(this.props.id)}>
                     <CardBody>
                         <CardTitle>{this.props.title}</CardTitle>
                         <CardText>{this.props.description}</CardText>

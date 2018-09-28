@@ -1,8 +1,76 @@
 import React, { Component } from 'react';
-import { Button, Form } from 'reactstrap';
 import FormContainer from '../../components/FormContainer';
+import View from './../../components/View';
+import UserService from './../../service/UserService';
+import User from './../../repository/User';
 
 export default class PersonalInformation extends Component {
+
+    constructor(props) {
+        super(props);
+        this.onSave = this.onSave.bind(this);
+    }
+
+    getValue(element) {
+        const e = document.getElementById(element);
+        if (e) {
+            return e.value;
+        }
+        return null;
+    }
+
+    getRadioValue(element) {
+        const e = document.querySelector('input[name="'.concat(element).concat('"]:checked'));
+        if (e) {
+            return e.value;
+        }
+        return null;
+    }
+
+    setValue(element, value) {
+        const e = document.getElementById(element);
+        if (e) {
+            e.value = value;
+        }
+    }
+
+    setValueRadio(element) {
+        const e = document.getElementById(element);
+        if (e) {
+            e.checked = true;
+        }
+    }
+
+    onSave() {
+        const user = {
+            ID_USUARIO : User.getIdUser(),
+            DS_EMAIL: this.getValue('ds_email'),
+            NM_PESSOA: this.getValue('nm_pessoa'),
+            DS_CPF: '',
+            DT_NASCIMENTO: this.getValue('dt_nascimento'),
+            IE_SEXO: this.getRadioValue('ie_sexo'),
+            DS_CIDADE_NATAL: this.getValue('ds_cidade_natal'),
+            DS_CIDADE_ATUAL: this.getValue('ds_cidade_atual'),
+            DS_ENDERECO: this.getValue('ds_endereco'),
+            NR_TELEFONE: this.getValue('nr_telefone')
+        }
+        UserService.updateUser(user);
+    }
+
+    componentDidMount() {
+        UserService.getUserInformations().then(resp => {
+            if (resp.data) {
+                this.setValue('ds_email', resp.data.dsEmail);
+                this.setValue('nm_pessoa', resp.data.nmPessoa);
+                this.setValue('dt_nascimento', resp.data.dtNascimento);
+                this.setValue('ds_cidade_natal', resp.data.dsCidadeNatal);
+                this.setValue('ds_cidade_atual', resp.data.dsCidadeAtual);
+                this.setValue('ds_endereco', resp.data.dsEndereco);
+                this.setValue('nr_telefone', resp.data.nrTelefone);
+                this.setValueRadio('ie_sexo_'.concat(resp.data.ieSexo));
+            }
+        });
+    }
 
     render() {
 
@@ -15,67 +83,34 @@ export default class PersonalInformation extends Component {
         const pInformation =
             <div className='pInformation'>
                 <FormContainer fields={[
-                    { type: 'text', idInput: 'nm_completo', placeholder: 'Nome Completo', col: '12', required: true }]} />
-                <FormContainer fields={[
-                    { type: 'date', idInput: 'dt_nasc', col: '3', placeholder: 'Data de nascimento' },
-                    { type: 'text', idInput: 'cidade_nt', placeholder: 'Cidade natal', col: '9' },
-                ]} />
-                <FormContainer fields={[
-                    { type: 'radio', idInput: 'rg_sexo', placeholder: 'Sexo', col: '12', options: ['feminino', 'masculino'], values: ['f', 'm'] }
+                    { type: 'text', idInput: 'nm_pessoa', placeholder: 'Nome Completo', required: true },
+                    { type: 'date', idInput: 'dt_nascimento', placeholder: 'Data de nascimento', required: true },
+                    { type: 'text', idInput: 'ds_cidade_natal', placeholder: 'Cidade natal'},
+                    { type: 'radio', idInput: 'ie_sexo', placeholder: 'Sexo', required: true,
+                        options: [{OPTION: 'feminino', VALUE: 'f'} , {OPTION: 'masculino', VALUE: 'm' }]}
                 ]} />
             </div>;
 
         const aInformation =
             <div className='pInformation'>
                 <FormContainer fields={[
-                    { type: 'text', idInput: 'ds_cidade', placeholder: 'Cidade', col: '4' },
-                    { type: 'text', idInput: 'ds_pais', placeholder: 'Pais', col: '4' },
-                    { type: 'text', idInput: 'ds_estado', placeholder: 'Estado', col: '4' }
-                ]} />
-                <FormContainer fields={[
-                    { type: 'text', idInput: 'nr_telefone', placeholder: 'Telefone', col: '6' }
-                ]} />
-                <FormContainer fields={[
-                    { type: 'text', idInput: 'ds_endereco', placeholder: 'Endereço', col: '6' },
-                    { type: 'number', idInput: 'nr_numero', placeholder: 'Número', col: '2', maxlength: '5' },
-                    { type: 'text', idInput: 'ds_complemento', placeholder: 'Complemento', col: '4' }
-                ]} />
-                <FormContainer fields={[
-                    { type: 'text', idInput: 'ds_email', placeholder: 'Email', col: '12', icon: 'mail.png' }
+                    { type: 'text', idInput: 'ds_cidade_atual', placeholder: 'Cidade Atual' },
+                    { type: 'text', idInput: 'ds_endereco', placeholder: 'Endereço' },
+                    { type: 'number', idInput: 'nr_telefone', placeholder: 'Telefone' },
+                    { type: 'text', idInput: 'ds_email', placeholder: 'Email' }
                 ]} />
             </div>;
 
-        return (
-            <div className='col-12 view div'>
+        const modeV = (
+            <div id='pInformationDiv'>
                 {header}
                 {pInformation}
                 {aInformation}
-                <Form align='center'>
-                    <Button>Salvar</Button>
-                </Form>
             </div>
+        );
 
+        return (
+            <View modeV={modeV} id='pInformationDiv' onSave={this.onSave}/>
         );
     }
 }
-
-/*
-<FormContainer fields={[
-    { type: 'label', label: 'lala', col: '3' },
-    { type: 'label', label: 'asas', col: '3' },
-]} />
-<FormContainer fields={[
-    { type: 'text', idInput: 't1', placeholder: 'olá', col: '3', addon: '@' },
-    { type: 'text', idInput: 't2', placeholder: 'olá', col: '3' },
-    { type: 'password', idInput: 'p', col: '1', maxlength: '2' },
-    { type: 'select', idInput:'s1', col: '3', options: [1, 2, 3, 4] },
-    { type: 'textarea', idInput:'ta1', col: '5', idInput: 'll', rows: '1', maxlength: '2' },
-    { type: 'file', idInput:'f1', col: '2' },
-    { type: 'formtext', idInput:'ft1', col: '2', text:'lalalalalla' },
-    { type: 'radio', idInput: 'r1', col:'3', options: ['oi', 'oie', 'hey'], label:'herou'},
-    { type: 'check', idInput:'c1', col:'3', desc:'hehe'}
-]} />
-<Form> 
-    <Button>Submit</Button>
-</Form>
-*/

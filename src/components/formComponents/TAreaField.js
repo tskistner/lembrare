@@ -10,7 +10,8 @@ export default class TAreaField extends React.Component {
                     name={this.props.idInput}
                     id={this.props.idInput}
                     maxLength={this.props.maxlength}
-                    rows={this.props.rows} />
+                    rows={this.props.rows} 
+                    ref={this.props.idInput} />
             </div>
         );
     }

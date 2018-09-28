@@ -1,65 +1,77 @@
 import React from 'react';
 import View from './../../components/View';
-import { Button, Form } from 'reactstrap';
 import FormContainer from '../../components/FormContainer';
+import UserService from './../../service/UserService';
 
 export default class LoginControl extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { parentOptions: null };
+    this.onSave = this.onSave.bind(this);
+  }
+
+  componentWillMount() {
+    UserService.getAllAditionalInformation().then(response => {
+      if (response && response.data) {
+        this.setState({ parentOptions: response.data.PARENTS, registers: response.data.REGISTERS });
+      }
+    });
+  }
+
+  setValue(element, value) {
+    const e = document.getElementById(element);
+    if (e) {
+      e.value = value;
+    }
+  }
+
+  getValue(element) {
+    const e = document.getElementById(element);
+    if (e) {
+      return e.value;
+    }
+    return null;
+  }
+
+  onSave() {
+    const ai = {
+      idPessoa: this.getValue('ai_id_pessoa'),
+      nmPessoa: this.getValue('ai_nm_pessoa'),
+      dtNascimento: this.getValue('ai_dt_nascimento')
+    }
+    UserService.addAditionalInformation(ai);
+  }
 
 
   render() {
 
-    const header =
-      <header align='center' className='default-header'>
-        <img src={require('../../icons/person-icon-blue.png')} className='view image' alt='profile' />
-        <h2>Informações pessoais</h2>
-      </header>;
+    const parentOptions = this.state.parentOptions;
+    const registers = this.state.registers;
 
-    const mode =
-      <div>
-        <div className='pInformation'>
+    if (parentOptions) {
+      const mode = (
+        <div id='cInformationDiv'>
           <FormContainer
             fields={[
-              { type: 'text', idInput: 'nm_completo', placeholder: 'Nome Completo', col: '12', required: true }]} />
-          <FormContainer
-            fields={[
-              { type: 'date', idInput: 'dt_nasc', col: '3', placeholder: 'Data de nascimento' },
-              { type: 'text', idInput: 'cidade_nt', placeholder: 'Cidade natal', col: '9' },
-            ]} />
-          <FormContainer
-            fields={[
-              { type: 'radio', idInput: 'rg_sexo', placeholder: 'Sexo', col: '12', options: ['feminino', 'masculino'], values: ['f', 'm'] }
-            ]} />
-          <FormContainer fields={[
-            { type: 'text', idInput: 'ds_cidade', placeholder: 'Cidade', col: '4' },
-            { type: 'text', idInput: 'ds_pais', placeholder: 'Pais', col: '4' },
-            { type: 'text', idInput: 'ds_estado', placeholder: 'Estado', col: '4' }
-          ]} />
-          <FormContainer
-            fields={[
-              { type: 'text', idInput: 'nr_telefone', placeholder: 'Telefone', col: '6' }
-            ]} />
-          <FormContainer
-            fields={[
-              { type: 'text', idInput: 'ds_endereco', placeholder: 'Endereço', col: '6' },
-              { type: 'number', idInput: 'nr_numero', placeholder: 'Número', col: '2', maxlength: '5' },
-              { type: 'text', idInput: 'ds_complemento', placeholder: 'Complemento', col: '4' }
-            ]} />
-          <FormContainer
-            fields={[
-              { type: 'text', idInput: 'ds_email', placeholder: 'Email', col: '12', icon: 'mail.png' }
+              { type: 'select', idInput: 'ai_id_pessoa', placeholder: 'Grau parentesco', required: true, options: parentOptions },
+              { type: 'text', idInput: 'ai_nm_pessoa', placeholder: 'Nome', required: true },
+              { type: 'date', idInput: 'ai_dt_nascimento', placeholder: 'Data de nascimento', required: true }
             ]} />
         </div>
+      );
 
-        <Form align='center'>
-          <Button id='btn_salvar'>Salvar</Button>
-        </Form>
+      const regs = [['Nome', 'Data Nascimento', 'Grau parentesco']];
 
-      </div>
+      registers.map(r => {
+        regs.push([r.nm_pessoa, r.dt_nascimento, r.id_pessoa]);
+      });
 
-
-
-    return (
-      <View header={header} modeV={mode} button='btn_salvar' />
-    );
+      return (
+        <View modeV={mode} registers={regs} id='cInformationDiv' onSave={this.onSave} />
+      );
+    } else {
+      return <div></div>
+    }
   }
 }

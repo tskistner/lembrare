@@ -1,35 +1,19 @@
 import React from 'react';
-import { Input, InputGroupAddon, Label } from 'reactstrap';
+import { Input, Label } from 'reactstrap';
 
 export default class InputField extends React.Component {
 
     render() {
-        let addon, infRequired, icon;
-        if (this.props.addon) {
-            addon = <InputGroupAddon addonType="prepend">{this.props.addon}</InputGroupAddon>;
-        }
-        if (this.props.required) {
-            infRequired = <Label className='input required'>* </Label>;
-        }
-        if (this.props.icon) {
-            icon = <svg-icon><img src={require('./../../icons/' + this.props.icon)}
-                alt={this.props.icon} className='input image' /></svg-icon>;
-        }
-
         return (
-            <div className={'input-group col-' + this.props.col}>
-                <div className='col-12'>
-                    {infRequired}
-                    <Label>{this.props.placeholder + ':'}</Label>
-                </div>
-                {addon}
-                {icon}
+            <div className="form-group">
+                {this.props.required}
+                <Label>{this.props.placeholder + ':'}</Label>
                 <Input type={this.props.type}
                     name={this.props.idInput}
                     id={this.props.idInput}
-                    placeholder={this.props.placeholder}
                     maxLength={this.props.maxlength}
-                    required={this.props.required} />
+                    required={this.props.required} 
+                    ref={this.props.idInput} />
             </div>
         );
     }

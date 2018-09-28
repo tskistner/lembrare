@@ -7,7 +7,7 @@ export default class ButtonImage extends React.Component {
         return (number === this.props.idValueUp) ? this.getRandom() : number;
     }
 
-    getAleatoryImage() {
+    getRandomImage() {
         if (this.props.value === 1) {
             return this.props.idValueUp;
         }
@@ -15,7 +15,7 @@ export default class ButtonImage extends React.Component {
     }
 
     getImage() {
-        this.idImage = this.getAleatoryImage();
+        this.idImage = this.getRandomImage();
         return 'button-image div i'+this.idImage;
     }
 

@@ -31,7 +31,7 @@ export default class View extends React.Component {
         }
 
         return (
-            <div className='col-12 view div'>
+            <div className='view div'>
                 {mode}
             </div>
         );

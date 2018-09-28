@@ -3,8 +3,8 @@ import { ButtonImage, RadioField } from './../../../components';
 
 export default class FormIdentification extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.qtActualElements = 0;
         this.qtElements = 8;
         this.updateQtElements = this.updateQtElements.bind(this);
@@ -15,10 +15,9 @@ export default class FormIdentification extends React.Component {
 
     buildOptions() {
         return <RadioField
-            idInput={'excercise_cb'}
+            idInput={'formIdentification_rg'}
             col={12}
-            options={this.options.OPTIONS}
-            values={this.options.VALUES}
+            options={this.options}
             placeholder={''} />;
     }
 
@@ -60,9 +59,9 @@ export default class FormIdentification extends React.Component {
         [0, 0, 0, 0, 0, 0],
         [0, 1, 0, 0, 1, 0],
         [0, 1, 1, 1, 1, 0]];
-        this.options = {
-            OPTIONS: ['Carinha', 'Coração', 'Árvore'], 
-            VALUES: [1,2,3]};
+        this.options = [{ OPTION: 'Carinha', VALUE: 1 },
+                        { OPTION: 'Coração', VALUE: 2 },
+                        { OPTION: 'Árvore', VALUE:3 }];
         return { idValueUp, image };
     }
 

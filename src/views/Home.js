@@ -6,19 +6,27 @@ import MenuContainer from './../components/MenuContainer';
 
 export default class Home extends React.Component {
   render() {
-    const itens = [
-      { itemName: 'Cadastro', link: 'cadastro' },
-      { itemName: 'Atividades', link: 'atividades' },
-      { itemName: 'Book', link: 'book' },
-      { itemName: 'AddBook', link: 'addBook' }
+
+    const menuImage = (
+      <img src={require('./../icons/menu.svg')} alt='menu' />
+    )
+
+    const menu = [
+      { type:'dropdown', 
+        itemName: menuImage, 
+        options: [
+          { itemName: 'Cadastro', link: 'cadastro' },
+          { itemName: 'Atividades', link: 'atividades' }
+        ]}
     ];
+    
     //<main className='App'>
     return (
-      <div >
+      <div className='default-app'>
         <header>
-          <MenuContainer itens={itens} />
+          <MenuContainer itens={menu} />
         </header>
-        <main>
+        <main className='default-div'>
           <Switch>
             {routes}
           </Switch>

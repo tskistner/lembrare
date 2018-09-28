@@ -4,35 +4,38 @@ import ListItem from './ListItem';
 export default class GridMode extends React.Component {
 
     render() {
-        let head = [];
-        let body = [];
-        if (this.props.levels) {
-            let i = 0;
-            for (let j = 0; j < this.props.levels.length; j++) {
-                const cols = this.props.levels[j].columns;
-                if (cols) {
-                    if (this.props.levels[j].type === 'head') {
-                        const hCols = cols.map(c => {return <th scope='col' key={i++}>{c.desc}</th>});
-                        head.push(
-                            <thead key={i++}>
-                                <tr key={i++}>
-                                    <th></th>
-                                    {hCols}
-                                </tr>
-                            </thead>
-                        );
-                    } else {
-                        body.push(<ListItem cols={cols} click={this.props.handleClick} id={i++} key={i} />);
-                    }
-                }
-                i += 20;
-            }
+        const props = this.props;
+        let i = 0;
 
-        }
+        //Primeira posição do array é p header
+        const hCols = props.levels[0].map(c => {
+            return <th scope='col' key={i++}>{c}</th>
+        });
+        const btnAdd = <button className='btn btn-light'
+            id={'btn_add'}
+            //onClick={this.props.click}
+            key={i++} >
+            <img src={require('./../../icons/add.svg')} alt='add' />
+        </button>
+        const header = (
+            <thead>
+                <tr>
+                    <th>{btnAdd}</th>
+                    {hCols}
+                </tr>
+            </thead>
+        );
+
+        //Remover header
+        const reg = props.levels;
+        reg.shift();
+        const body = reg.map(l => {
+            return <ListItem cols={l} click={props.handleClick} id={i++} key={i} />;
+        });
 
         const table =
             <table className='table table-hover'>
-                {head}
+                {header}
                 <tbody>{body}</tbody>
             </table>
 
