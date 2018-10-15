@@ -1,6 +1,5 @@
 import React from 'react';
-import View from './../../components/View';
-import FormContainer from '../../components/FormContainer';
+import { View, FormContainer, Utils } from './../../components/';
 import UserService from './../../service/UserService';
 
 export default class LoginControl extends React.Component {
@@ -8,9 +7,9 @@ export default class LoginControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = { parentOptions: null };
-    this.onSave = this.onSave.bind(this);
   }
 
+  //Carregar registros
   componentWillMount() {
     UserService.getAllAditionalInformation().then(response => {
       if (response && response.data) {
@@ -19,28 +18,23 @@ export default class LoginControl extends React.Component {
     });
   }
 
-  setValue(element, value) {
-    const e = document.getElementById(element);
-    if (e) {
-      e.value = value;
-    }
-  }
-
-  getValue(element) {
-    const e = document.getElementById(element);
-    if (e) {
-      return e.value;
-    }
-    return null;
-  }
-
-  onSave() {
+  onSave(id) {
     const ai = {
-      idPessoa: this.getValue('ai_id_pessoa'),
-      nmPessoa: this.getValue('ai_nm_pessoa'),
-      dtNascimento: this.getValue('ai_dt_nascimento')
+      idPessoa: Utils.getValue('ai_id_pessoa'),
+      nmPessoa: Utils.getValue('ai_nm_pessoa'),
+      dtNascimento: Utils.getValue('ai_dt_nascimento')
     }
-    UserService.addAditionalInformation(ai);
+
+    if (id) {
+      ai.idInfoCompl = id;
+      return UserService.updateAditionalInformation(ai);
+    } else {
+      return UserService.addAditionalInformation(ai);
+    }
+  }
+
+  onDelete(id) {
+    return UserService.deleteAditionalInformation(id);
   }
 
 
@@ -61,14 +55,13 @@ export default class LoginControl extends React.Component {
         </div>
       );
 
-      const regs = [['Nome', 'Data Nascimento', 'Grau parentesco']];
-
-      registers.map(r => {
-        regs.push([r.nm_pessoa, r.dt_nascimento, r.id_pessoa]);
-      });
-
       return (
-        <View modeV={mode} registers={regs} id='cInformationDiv' onSave={this.onSave} />
+        <View modeV={mode}
+          registers={registers}
+          headerGrid={['Nome', 'Data Nascimento', 'Grau parentesco']}
+          id='cInformationDiv'
+          onSave={this.onSave}
+          onDelete={this.onDelete} />
       );
     } else {
       return <div></div>

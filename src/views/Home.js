@@ -1,45 +1,26 @@
 import React from 'react';
-import './../css/App.css';
-import { Switch } from 'react-router-dom';
-import routes from './routes.js';
-import MenuContainer from './../components/MenuContainer';
+import { ModalBox } from '../components';
 
 export default class Home extends React.Component {
-  render() {
 
-    const menuImage = (
-      <img src={require('./../icons/menu.svg')} alt='menu' />
-    )
+    componentDidMount() {
+        document.getElementById('main_div').classList.remove('white');
+        setTimeout(() => {
+            document.getElementById('bt_modal_hidden_home').click();
+        }, 300);
+    }
 
-    const menu = [
-      { type:'dropdown', 
-        itemName: menuImage, 
-        options: [
-          { itemName: 'Cadastro', link: 'cadastro' },
-          { itemName: 'Atividades', link: 'atividades' }
-        ]}
-    ];
-    
-    //<main className='App'>
-    return (
-      <div className='default-app'>
-        <header>
-          <MenuContainer itens={menu} />
-        </header>
-        <main className='default-div'>
-          <Switch>
-            {routes}
-          </Switch>
-        </main>
-        <footer className='footer footer-dark'>
-          <div className='container'>
-            <span className='text-muted'>
-              Desenvolvido por Tamires Schloegel Kistner
-            </span>
-          </div>
-        </footer>
-      </div>
-    );
-  }
+    render() {
+        const body = (
+            <div>
+                <p className='view title' align='center'>Bem vindo!</p>
+                <p>Para visualizar as opções clique no botão ao lado esquerdo superior da tela.</p>
+                <p>Lá você pode ir para sua área de cadastros, suas atividades, ou gerar um relatório de seu desempenho.</p>
+            </div>
+        );
+        return <ModalBox 
+        modalBody = {body}
+        ieHiddenButton = 'home'
+        ieBtOk = {true} />
+    }
 }
-

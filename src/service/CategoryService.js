@@ -1,55 +1,32 @@
-import axios from 'axios';
-import FileService from './FileService';
 import User from './../repository/User';
+import Service from './Service';
 
-class CategoryService {
+class CategoryService extends Service {
 
     getCategoryLevel() {
-        return this.send('getLevel');
-    }
-
-    getRandomExerciseByLevel(idCategory) {
-        return this.sendParam('randomExerciseByLevel', User.getIdUser() + '/' + idCategory);
+        return this.send('getLevel', 'activitiesservice');
     }
 
     getCategories() {
-        return this.send('categories');
+        return this.send('allCategories', 'activitiesservice');
     }
 
-    getImageExcercise(idExercicio) {
-        return this.sendParam('imageExcercise',idExercicio);
+    getExercise(idCategory, idExercise) {
+        return this.sendPost('getExercise', 'activitiesservice',
+            { idUsuario: User.getIdUser(), idCategoria: idCategory, idExercicio: idExercise });
     }
 
-    updateLevel(ieUp, idCategory, idExercicio) {
-        const parametros = {
-            ID_USUARIO: User.getIdUser(),
-            ID_CATEGORIA: idCategory,
-            ID_EXERCICIO: idExercicio,
-            IE_OPCAO: ieUp ? 'U' : 'D'
-        };
-        return this.sendParam('updateLevel', parametros);
+    getImageExcercise(idExercise) {
+        return this.sendParam('imageExcercise', 'activitiesservice', idExercise);
     }
 
-    send(method) {
-        return new Promise(function (resolve, reject) {
-            axios.get('http://localhost:8080/activitiesservice/' + method)
-                .then(response => resolve(response),
-                    () => reject('error ' + method));
-        });
+    updateLevel(data) {
+        data.idUsuario = User.getIdUser();
+        return this.sendPost('updateLevel', 'activitiesservice', data);
     }
 
-    sendParam(method, data) {
-        return new Promise(function (resolve, reject) {
-            axios.get('http://localhost:8080/activitiesservice/'.concat(method).concat('/').concat(data))
-                .then(response => {
-                    resolve(response);
-                }, err => console.log(err));
-        });
-    }
-
-    uploadFileToServer(data) {
-        //returns Promise object
-        return FileService.getRestClient().post('/files', data);
+    getAllParents() {
+        return this.sendParam('parents', 'icomp', User.getIdUser());
     }
 }
 

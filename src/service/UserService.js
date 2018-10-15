@@ -1,44 +1,57 @@
-import axios from 'axios';
 import User from './../repository/User';
+import Service from './Service';
 
-class UserService {
+class UserService extends Service {
 
-    updateUser(u) {
-        axios.request({
-            method: 'POST',
-            url: 'http://localhost:8080/user/update',
-            data: u
-        }).then(res => {
-            this.props.history.push('/')
-        }).catch(err => console.log(err));
-    }
-
+    /* Informações adicionais */
     addAditionalInformation(ai) {
         ai.idUsuario = User.getIdUser();
-        axios.request({
-            method: 'POST',
-            url: 'http://localhost:8080/icomp/add',
-            data: ai
-        }).then(res => {
-            this.props.history.push('/')
-        }).catch(err => console.log(err));
+        return this.sendPost('add', 'icomp', ai);
+    }
+
+    updateAditionalInformation(ai) {
+        ai.idUsuario = User.getIdUser();
+        return this.sendPost('update', 'icomp', ai);
     }
 
     getAllAditionalInformation() {
-        return this.sendParam('getAi', User.getIdUser());
+        return this.sendParam('allAI', 'icomp', User.getIdUser());
+    }
+
+    deleteAditionalInformation(id) {
+        return this.sendPost('delete', 'icomp', {ID: id, idUsuario: User.getIdUser()});
+    }
+
+    /* Usuário */
+    updateUser(u) {
+        return this.sendPost('update', 'user', u);
+    }
+
+    updatePassword(data) {
+        this.sendPost('upwd', 'user', data);
     }
 
     getUserInformations() {
-        return this.sendParam('gbi',User.getIdUser(),'user');
+        return this.sendParam('uByID', 'user', User.getIdUser());
     }
 
-    sendParam(method, data, service = 'userservice') {
-        return new Promise(function (resolve) {
-            axios.get('http://localhost:8080/'.concat(service).concat('/'.concat(method).concat('/').concat(data)))
-                .then(response => {
-                    resolve(response);
-                }, err => console.log(err));
-        });
+    /* Endereço */
+    addAddress(data) {
+        data.idUsuario = User.getIdUser();
+        return this.sendPost('add', 'address', data);
+    }
+
+    updateAddres(data) {
+        data.idUsuario = User.getIdUser();
+        return this.sendPost('update', 'address', data);
+    }
+
+    deleteAddress(id) {
+        return this.sendPost('delete', 'address', {ID: id, idUsuario: User.getIdUser()});
+    }
+
+    getAllAddress() {
+        return this.sendParam('all', 'address', User.getIdUser()); 
     }
 
 }

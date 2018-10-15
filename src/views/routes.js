@@ -1,15 +1,12 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { Activities, Settings, Book, AddBook } from './';
-import Page2 from './../views/settings/Page2';
+import { Activities, Settings } from './';
+import Home from './Home';
 
 let i = 0;
 const routes = [
-    //<Route path={`${process.env.PUBLIC_URL}/`} component={Home} key={i++} />,
+    <Route path={`${process.env.PUBLIC_URL}/home`} component={Home} key={i++} />,
     <Route path='/atividades' component={Activities} key={i++} />,
-    <Route path='/book' component={Book} key={i++}/>,
-    <Route path='/addBook' component={AddBook} key={i++}/>,
-    <Route path='/cadastro' component={Settings} key={i++} />,
-    <Route path='/page2' component={Page2} key={i++} />
+    <Route path='/cadastro' component={Settings} key={i++} />
 ]
 export default routes;

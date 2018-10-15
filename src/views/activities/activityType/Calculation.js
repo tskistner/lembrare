@@ -1,7 +1,13 @@
 import React from 'react';
-import { RadioPainted } from './../../../components';
+import { Button } from 'reactstrap';
+import { RadioPainted, Utils } from './../../../components';
 
 export default class Calculation extends React.Component {
+
+    constructor() {
+        super();
+        this.correctAnswer = null;
+    }
 
     getRandomNumber(maxNumber, qtAdd) {
         return Math.floor((Math.random() * maxNumber) + qtAdd);
@@ -14,16 +20,25 @@ export default class Calculation extends React.Component {
     buildRandomCalculation() {
         const number1 = this.getRandomNumber(10,1);
         const number2 = this.getRandomNumber(10,1);
+        let result = [];
         switch (this.getRandomNumber(3,0)) {
             case 0:  // Adição
-                return [ this.getExpression(number1, number2, ' + '), number1 + number2 ];
+                result = [ this.getExpression(number1, number2, ' + '), number1 + number2 ];
+                break;
             case 1: // Subtração
-                return [ this.getExpression(number1, number2, ' - '), number1 - number2 ];
+                result = [ this.getExpression(number1, number2, ' - '), number1 - number2 ];
+                break;
             case 2: // Multiplicação
-                return [ this.getExpression(number1, number2, ' * '), number1 * number2 ];
-            case 3: // Divisão
-                return [ this.getExpression(number1, number2, ' / '), number1 / number2 ];
-        }   
+                result = [ this.getExpression(number1, number2, ' * '), number1 * number2 ];
+                break;
+            default: // Divisão
+                result = [ this.getExpression(number1, number2, ' / '), number1 / number2 ];
+                break;
+        }
+        if (result[1] == this.correctAnswer) {
+            return this.buildRandomCalculation();
+        } 
+        return result;
     }
 
     buildOptions(value) {
@@ -36,10 +51,15 @@ export default class Calculation extends React.Component {
             });
         }
 
-        addOption(value, 3);
+        this.correctAnswer = value;
+        addOption(value, 0);
         addOption(this.buildRandomCalculation()[1], 1);
         addOption(this.buildRandomCalculation()[1], 2);
-        return options.sort();
+        return Utils.shuffle(options);
+    }
+
+    componentDidUpdate() {
+        //Utils.scrollToExercise();
     }
 
     render() {
@@ -52,10 +72,8 @@ export default class Calculation extends React.Component {
                     {expressao[0]}
                 </div>
                 <RadioPainted
-                    idInput='calculation_rg'
-                    col={8}
-                    options={this.buildOptions(expressao[1])}
-                    painted={true} />
+                    idInput={this.props.id}
+                    options={this.buildOptions(expressao[1])}/>
             </div>
         );
 
@@ -63,6 +81,10 @@ export default class Calculation extends React.Component {
             <div>
                 <h1 className='view title' align='center'>Qual o resultado do cálculo abaixo?</h1>
                 {divC}
+                <div align='center'>
+                    <Button onClick={() => this.props.clicks.OK(this.correctAnswer)}>Ok</Button>
+                    <Button onClick={this.props.clicks.CANCEL}>Voltar</Button>
+                </div>
             </div>
         );
     }

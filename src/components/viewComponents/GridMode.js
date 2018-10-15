@@ -7,30 +7,37 @@ export default class GridMode extends React.Component {
         const props = this.props;
         let i = 0;
 
-        //Primeira posição do array é p header
-        const hCols = props.levels[0].map(c => {
-            return <th scope='col' key={i++}>{c}</th>
+        //Construir o cabeçalho
+        const headerColumns = props.header.map(h => {
+            return <th scope='col' key={i++}>{h}</th>
         });
-        const btnAdd = <button className='btn btn-light'
-            id={'btn_add'}
-            //onClick={this.props.click}
-            key={i++} >
-            <img src={require('./../../icons/add.svg')} alt='add' />
-        </button>
+
+        //Botão de adicionar registro
+        const btnAdd = (
+            <button className='btn btn-light'
+                id={'btn_add'}
+                onClick={props.onNewRecord}
+                key={i++} >
+                <img src={require('./../../icons/add.svg')} alt='add' />
+            </button>
+        );
+
         const header = (
             <thead>
                 <tr>
                     <th>{btnAdd}</th>
-                    {hCols}
+                    {headerColumns}
                 </tr>
             </thead>
         );
 
-        //Remover header
-        const reg = props.levels;
-        reg.shift();
-        const body = reg.map(l => {
-            return <ListItem cols={l} click={props.handleClick} id={i++} key={i} />;
+        //Criar linhas
+        const body = props.registers.map((l, i) => {
+            return <ListItem columns={l} 
+                onEdit={props.onEdit} 
+                onDelete={props.onDelete}
+                id={i++} 
+                key={i} />;
         });
 
         const table =

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'reactstrap';
 import CategoryService from './../../../service/CategoryService';
 import { RadioPainted } from './../../../components';
 
@@ -7,6 +8,7 @@ export default class Hour extends React.Component {
     constructor(props) {
         super(props);
         this.state = { imgOptions: null };
+        this.correctAnswer = null;
     }
 
     buildOptions(rigthOption) {
@@ -33,8 +35,9 @@ export default class Hour extends React.Component {
 
         addROption(1);
         addROption(2);
-        //adicionar opção real
-        options.push({ OPTION: rigthOption, VALUE: 3 });
+        //adicionar opção correta
+        this.correctAnswer = rigthOption;
+        options.push({ OPTION: rigthOption, VALUE: 0 });
         return options.sort();
     }
 
@@ -47,10 +50,8 @@ export default class Hour extends React.Component {
                         <img id='hour' src={'data:image/png;base64,' + res.data.B_IMAGEM} alt='hour' />
                     </div>
                     <RadioPainted
-                        idInput={'hour_rg'}
-                        col={8}
-                        options={this.buildOptions(res.data.ds_imagem)}
-                        painted={true} />
+                        idInput={this.props.id}
+                        options={this.buildOptions(res.data.ds_imagem)} />
                 </div>
             );
 
@@ -58,6 +59,10 @@ export default class Hour extends React.Component {
             this.ds_valores = res.data.ds_valores;
             this.setState({ imgOptions: divC });
         }, err => console.log(err));
+    }
+
+    componentDidUpdate() {
+        //window.scrollTo(0, document.body.scrollHeight);
     }
 
     render() {
@@ -68,6 +73,10 @@ export default class Hour extends React.Component {
             <div>
                 <h1 className='view title' align='center'>Conforme imagem abaixo, que horas são?</h1>
                 {imgOptions}
+                <div align='center'>
+                    <Button onClick={() => this.props.clicks.OK(this.correctAnswer)}>Ok</Button>
+                    <Button onClick={this.props.clicks.CANCEL}>Voltar</Button>
+                </div>
             </div>
         );
     }

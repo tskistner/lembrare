@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     InputField, SelectField, TAreaField, RadioField, CheckField
-} from "./formComponents/";
+} from "./";
 import { FormGroup, Label } from 'reactstrap';
 
 
@@ -35,7 +35,8 @@ export default class FormContainer extends React.Component {
                         idInput={f.idInput}
                         desc={f.desc}
                         placeholder={f.placeholder}
-                        required={f.required ? infRequired : null} />;
+                        required={f.required ? infRequired : null}
+                        ieChecked={f.ieChecked} />;
                 default:
                     return <InputField key={i}
                         type={f.type}

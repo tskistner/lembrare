@@ -2,19 +2,32 @@ import React from 'react';
 
 export default class ListItem extends React.Component {
 
+    constructor() {
+        super();
+        this.onEdit = this.onEdit.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+    }
+
     onDelete() {
-        console.log('deletando');
+        this.props.onDelete(this.props.columns);
+    }
+
+    onEdit() {
+        this.props.onEdit(this.props.columns);
     }
 
     render() {
         let indice = this.props.id;
-        const columns = this.props.cols.map(c => {
-            return <td key={indice++}>{c}</td>; 
+        const columns = this.props.columns.map(c => {
+            if (c.SHOW) {
+                return <td key={indice++}>{c.VALUE}</td>;
+            }
+            return null;
         });
 
         const btnEdit = <button className='btn btn-light'
             id={'btn_edit_' + this.props.id}
-            onClick={this.props.click.bind(this)}
+            onClick={this.onEdit}
             key={indice++} >
             <img src={require('./../../icons/edit.svg')} alt='delete' />
         </button>;

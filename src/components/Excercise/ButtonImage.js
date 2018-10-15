@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'reactstrap';
 
 export default class ButtonImage extends React.Component {
 
@@ -8,7 +9,7 @@ export default class ButtonImage extends React.Component {
     }
 
     getRandomImage() {
-        if (this.props.value === 1) {
+        if (['1', '0.5', '+0.5', '-0.5', '--0.5'].includes(this.props.value)) {
             return this.props.idValueUp;
         }
         return this.getRandom();
@@ -16,28 +17,55 @@ export default class ButtonImage extends React.Component {
 
     getImage() {
         this.idImage = this.getRandomImage();
-        return 'button-image div i'+this.idImage;
+        return 'button-image div i' + this.idImage;
     }
 
     componentWillMount() {
         this.defaultImage = this.getImage();
     }
 
-    onClickButton(id) {
-        document.getElementById(id).classList.remove('i'+this.idImage);
-        document.getElementById(id).classList.add('color');
+    changeIcon(element, classAdd) {
+        element.classList.remove('i'.concat(this.idImage));
+        element.classList.add('color');
+        if (classAdd) {
+            element.classList.add(classAdd);
+        }
         this.props.updateQtElements();
+    }
+
+    onClickButton(id) {
+        const element = document.getElementById(id);
+        if (element.classList.contains('i'.concat(this.idImage))) {
+            switch (this.props.value) {
+                case '0.5':
+                    this.changeIcon(element, 'mPositive');
+                    break;
+                case '+0.5':
+                    this.changeIcon(element, 'mPositive2');
+                    break;
+                case '-0.5':
+                    this.changeIcon(element, 'mNegative');
+                    break;
+                case '--0.5':
+                    this.changeIcon(element, 'mNegative2');
+                    break;
+                case '1':
+                    this.changeIcon(element);
+                    break;
+                default:
+                    element.classList.add('incorrect-icon');
+                    setTimeout(() => {
+                        element.classList.remove('incorrect-icon');
+                    }, 150);
+                    break;
+            }
+        }
     }
 
     render() {
         const id = 'icon_' + this.props.idIconImage;
-        const onClick = this.props.value === 1 ? () => this.onClickButton(id) : null;
         return (
-            <button  onClick={onClick}>
-                <div className={this.defaultImage}
-                    alt={id}
-                    id={id} />
-            </button>
+            <Button onClick={() => this.onClickButton(id)} className={this.defaultImage} id={id} />
         );
     }
 }

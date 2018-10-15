@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Home } from './views';
+import { Default } from './views';
 
 class App extends Component {
   render() {
     return (
-      <Home/>
+      <Default/>
     );
   }
 }

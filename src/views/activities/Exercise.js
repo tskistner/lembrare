@@ -1,11 +1,11 @@
 import React from 'react';
 import CategoryService from '../../service/CategoryService';
 import exercises from './ExerciseTypeEnum';
+import Report from './Report';
 import {
-    Calculation, Event, FormIdentification, Hour, Image, ObjectIdentification,
-    PersonalQuestion, Sound, Word
+    Calculation, Event, Hour, Image, ObjectIdentification, Sound, Word, DefaultExercise
 } from './activityType';
-import { Button } from 'reactstrap';
+import { Utils } from './../../components';
 
 export default class Exercise extends React.Component {
 
@@ -13,47 +13,49 @@ export default class Exercise extends React.Component {
         super(props);
         this.state = { exercise: null };
         this.idDivExercise = null;
+        this.ieCorrectAnswer = false;
         this.onClick = this.onClick.bind(this);
+        this.updateLevel = this.updateLevel.bind(this);
     }
 
-    randomExercise(idExercise, level) {
-        idExercise = 8;
-        this.idExercise = idExercise;
-        switch (idExercise) {
-            case exercises.PERSONAL_QUESTION:
-                this.idDivExercise = 'personal_question_rg';
-                return <PersonalQuestion level={level} />
-            case exercises.FORM_IDENTIFICATION:
-                this.idDivExercise = 'form_identification_rg';
-                return <FormIdentification level={level} />
+    randomExercise(data) {
+        const clicks = {
+            OK: this.onClick,
+            CANCEL: this.props.handleClick
+        }
+        switch (data.EXERCISE) {
             case exercises.OBJECT_IDENTIFICATION:
+            case exercises.FORM_IDENTIFICATION:
                 this.idDivExercise = 'object_identification_rg';
-                return <ObjectIdentification level={level} />
+                return <ObjectIdentification data={data} id={this.idDivExercise} clicks={clicks} />
             case exercises.SOUND:
                 this.idDivExercise = 'sound_rg';
-                return <Sound level={level} />
+                return <Sound data={data} id={this.idDivExercise} clicks={clicks} />
             case exercises.IMAGES:
                 this.idDivExercise = 'image_rg';
-                return <Image leve={level} />
+                return <Image data={data} id={this.idDivExercise} clicks={clicks} />
             case exercises.WORDS:
                 this.idDivExercise = 'words_rg';
-                return <Word level={level} />
+                return <Word data={data} id={this.idDivExercise} clicks={clicks} />
             case exercises.EVENT:
                 this.idDivExercise = 'event_rg';
-                return <Event level={level} />
+                return <Event data={data} id={this.idDivExercise} clicks={clicks} />
             case exercises.HOUR:
                 this.idDivExercise = 'hour_rg';
-                return <Hour level={level} />
+                return <Hour data={data} id={this.idDivExercise} clicks={clicks} />
             case exercises.CALCULATION:
                 this.idDivExercise = 'calculation_rg';
-                return <Calculation level={level} />
+                return <Calculation id={this.idDivExercise} clicks={clicks} />
+            default:
+                this.idDivExercise = 'exercise_default'.concat(data.EXERCISE);
+                return <DefaultExercise data={data} id={this.idDivExercise} clicks={clicks} />
         }
     }
 
     chooseExercise() {
-        const id = this.props.category.substr(this.props.category.lastIndexOf('_') + 1, this.props.category.length)
-        CategoryService.getRandomExerciseByLevel(id).then(res => {
-            this.setState({ exercise: this.randomExercise(res.data.EXERCICIO, res.data.LEVEL) });
+        const idCategory = this.props.category.substr(this.props.category.lastIndexOf('_') + 1, this.props.category.length)
+        CategoryService.getExercise(idCategory, this.state.idExercise).then(res => {
+            this.setState({ exercise: this.randomExercise(res.data), idExercise: res.data.EXERCISE });
         }, err => console.log(err));
     }
 
@@ -61,49 +63,40 @@ export default class Exercise extends React.Component {
         this.chooseExercise()
     }
 
-    onClick() {
-        function validate(id) {
-            const attribute = document.querySelector('input[name="'.concat(id).concat('"]:checked'));
-            if (!attribute) {
-                alert('Favor escolher uma opção!');
-                return false;
-            }
-            return attribute;
-        }
+    componentDidMount() {
+        setTimeout(() => {
+            document.getElementById('activitiesDiv').scrollIntoView()
+        }, 150);
+    }
 
-        const att = validate(this.idDivExercise);
-        if (att) {
-            if (att.value == 3) {
-                alert('Resposta correta!');
+    updateLevel(response) {
+        const id = this.props.category.substr(this.props.category.lastIndexOf('_') + 1, this.props.category.length)
+        CategoryService.updateLevel({
+            idCategoria: id,
+            idExercicio: this.state.idExercise,
+            ieOpcao: this.ieCorrectAnswer ? 'U' : 'D',
+            idPessoa: response.ID_PARENT,
+            dsBoletim: response.DS_REPORT
+        });
+        this.chooseExercise();
+    }
+
+    onClick(correctAnswer) {
+        Utils.validate(this.idDivExercise, correctAnswer, 'Relatório').then(response => {
+            this.ieCorrectAnswer = response.ATRIBUTE === '0';
+            if (response.BUTTON === 2) {
+                document.getElementById('bt_modal_hidden_exer').click();
             } else {
-                alert('Resposta incorreta!');
+                this.updateLevel(response);
             }
-            const id = this.props.category.substr(this.props.category.lastIndexOf('_') + 1, this.props.category.length)
-            /*CategoryService.updateLevel(att.value === 3,  //Valor padrão
-                                        id, this.idExercise);*/
-            this.props.handleClick();
-        }
+        });
     }
 
     render() {
-
-        let exercise = this.state.exercise;
-
-        if (exercise) {
-            exercise = (
-                <div>
-                    {this.state.exercise}
-                    <div align='center'>
-                        <Button onClick={this.onClick}>Ok</Button>
-                        <Button onClick={this.props.handleClick}>Voltar</Button>
-                    </div>
-                </div>
-            );
-        }
-
         return (
             <div>
-                {exercise}
+                {this.state.exercise}
+                <Report onClick={this.updateLevel} />
             </div>
         );
     }

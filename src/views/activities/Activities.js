@@ -2,7 +2,7 @@ import React from 'react';
 import Categories from './Categories';
 import Excercise from './Exercise';
 
-export default class View extends React.Component {
+export default class Activities extends React.Component {
 
     constructor(props) {
         super(props);
@@ -31,7 +31,7 @@ export default class View extends React.Component {
         }
 
         return (
-            <div className='view div'>
+            <div id='activitiesDiv' className='view div white'>
                 {mode}
             </div>
         );

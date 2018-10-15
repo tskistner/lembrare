@@ -1,15 +1,6 @@
 .default-app {
-  background-image: url('./../icons/lembrare-bg.jpeg');
+  background-image: url('./../icons/bg_home_page.jpeg');
   /* Full height */
-  height: 100%;
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.btn.btn-secondary.dropdown-toggle.default {
-  background-image: url('./../icons/menu.svg');
   height: 100%;
   /* Center and scale the image nicely */
   background-position: center;
@@ -19,15 +10,40 @@
 
 .navbar.navbar-expand-lg.default {
   background-color: black;
+  height: 7vh;
 }
 
 .nav-link.default {
   color: white;
 }
 
+.menu-div {
+  background-color: black;
+  width: 150px;
+  height: 100vh;
+  position: fixed;
+  z-index: 1;
+}
+
+.menu-button {
+  background-image: url('./../icons/menu.png');
+  height: 100%;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .default-div {
   margin-left: 1%;
   margin-right: 1%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  height: 77.5vh;
+  overflow: auto;
+}
+
+.default-div.white {
   background-color: white;
 }
 
@@ -44,6 +60,11 @@
   margin-right: 5%;
 }
 
+.exercise.image {
+  height: 150px;
+  width: 150px;
+}
+
 .position-relative.form-check.default {
   padding: 2%;
   opacity: 0.5;
@@ -57,6 +78,10 @@
 
 .default.radio {
   padding: 0.5%;
+}
+
+.label.radio {
+  margin-left: 1%;
 }
 
 .position-relative.form-check.default.purple {
@@ -77,11 +102,12 @@ a.navbar-brand.menu-title {
 
 .footer.footer-dark {
   background-color: black;
-  padding: 2%;
+  height: 7vh;
 }
 
 .view.div {
-  margin: 2%;
+  margin-left: 2%;
+  margin-right: 2%;
   width: 95%;
   padding: 2%; 
   background-color: white;
@@ -134,45 +160,65 @@ a.navbar-brand.menu-title {
 }
 
 .button-image.div {
-  height: 70px;
-  width: 70px;
+  height: 45px;
+  width: 45px;
 }
 
 .button-image.div.i1 {
   background: url('./../icons/excercises/button_1.svg');
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .button-image.div.i2 {
   background: url('./../icons/excercises/button_2.svg');
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .button-image.div.i3 {
   background: url('./../icons/excercises/button_3.svg');
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .button-image.div.i4 {
   background: url('./../icons/excercises/button_4.svg');
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .button-image.div.i5 {
   background: url('./../icons/excercises/button_5.svg');
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+}
+
+.button-image.div.incorrect-icon {
+  background-color: red;
 }
 
 .button-image.div.color {
   background-color: blue;
+}
+
+.button-image.div.color.mPositive {
+  background: linear-gradient(to bottom right, white 0%, white 50%, blue 50%, blue 100%);
+}
+
+.button-image.div.color.mPositive2 {
+  background: linear-gradient(to bottom right, blue 0%, blue 50%, white 50%, white 100%);
+}
+
+.button-image.div.color.mNegative {
+  background: linear-gradient(to bottom left, white 0%, white 50%, blue 50%, blue 100%);
+}
+
+.button-image.div.color.mNegative2 {
+  background: linear-gradient(to bottom left, blue 0%, blue 50%, white 50%, white 100%);
+}
+
+.fake-link {
+  border-bottom: 1px solid blue;
+  cursor: pointer;
 }

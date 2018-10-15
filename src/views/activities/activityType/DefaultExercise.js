@@ -1,45 +1,42 @@
 import React from 'react';
 import { Button } from 'reactstrap';
-import { Utils, RadioPainted } from '../../../components';
+import { RadioPainted, Utils } from '../../../components';
 
-export default class Word extends React.Component {
+export default class DefaultExercise extends React.Component {
 
     constructor() {
         super();
         this.correctAnswer = null;
     }
 
-    componentDidUpdate() {
-        //window.scrollTo(0, document.body.scrollHeight);
-    }
-
     buildOptions() {
         const options = this.props.data.ANSWER.split(';;').map((o,i) => {
             if (i === 0) {
-                this.correctAnswer = o;
+                this.correctAnswer = i;
             }
             return {
                 OPTION: o,
                 VALUE: i
-            }
+            };
         });
         return Utils.shuffle(options);
     }
 
-    render() {
+    getOptions() {
+        return <RadioPainted
+            idInput={this.props.id}
+            options={this.buildOptions()} />
+    }
 
+    componentDidUpdate() {
+        //Utils.scrollToExercise();
+    }
+
+    render() {
         return (
             <div>
-                <h1 className='view title' align='center'>Conforme a descrição abaixo, o que ela define?</h1>
-
-                <div className='exercise-question default'>
-                    <p>{this.props.data.DESCRIPTION}</p>
-                </div>
-
-                <RadioPainted
-                    idInput={this.props.id}
-                    options={this.buildOptions()} />
-
+                <h1 className='view title' align='center'>{this.props.data.DESCRIPTION}</h1>
+                {this.getOptions()}
                 <div align='center'>
                     <Button onClick={() => this.props.clicks.OK(this.correctAnswer)}>Ok</Button>
                     <Button onClick={this.props.clicks.CANCEL}>Voltar</Button>
