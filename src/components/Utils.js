@@ -1,6 +1,18 @@
 import { AlertBox } from './';
 
+let correctAnswer;
+let idCategory;
+let idExercise;
+
 class Utils {
+
+    getDateValue(element) {
+        const e = document.getElementById(element);
+        if (e) {
+            return new Date(e.value);
+        }
+        return null;
+    }
 
     getValue(element) {
         const e = document.getElementById(element);
@@ -64,26 +76,55 @@ class Utils {
         return arra1;
     }
 
-    validate(id, correctAnswer, ieReport) {
+    validate(id) {
         return new Promise((resolve, reject) => {
             const attribute = document.querySelector('input[name="'.concat(id).concat('"]:checked'));
             if (!attribute) {
                 AlertBox.show('<p> Favor escolher uma opção! </p>');
                 reject();
             } else {
-                const dsReport = '<p>Caso queira relatar alguma informação referente a esta atividade, pressione o botão "Relatório". </p>'
-                .concat('<p> Caso contrário, pressione o botão "OK" </p>');
-                if (attribute.value === '0') {
-                    AlertBox.show('<p>Parabéns!</p><p>Resposta correta!</p>'.concat(dsReport), ieReport)
-                        .then(response => resolve({ATRIBUTE: attribute.value, BUTTON: response}));
-                } else {
-                    AlertBox.show('<p>Desculpe, a resposta está incorreta.</p>'
-                        .concat('<p>Resposta correta: ').concat(correctAnswer).concat('</p>').concat(dsReport)
-                        , ieReport)
-                        .then(response => resolve({ATRIBUTE: attribute.value, BUTTON: response}));
-                }
+                resolve(attribute.value === '0');
             }
         });
+    }
+
+    //Realizar validação de campos obrigatórios
+    validateRequiredFields(idDiv) {
+        const divMode = document.getElementById(idDiv);
+        if (divMode) {
+            const requiredAtribs = divMode.querySelectorAll("[required]");
+            for (let i = 0; i < requiredAtribs.length; i++) {
+                if (!requiredAtribs[i].value) {
+                    AlertBox.show('<p align="center">Atenção!</p><p>Todos os campos obrigatórios devem ser preenchidos</p>')
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    setCorrectAnswer(_value) {
+        correctAnswer = _value;
+    }
+
+    getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    setIdCategory(_value) {
+        idCategory = _value;
+    }
+
+    getIdCategory() {
+        return idCategory;
+    }
+
+    setIdExercise(_value) {
+        idExercise = {_value};
+    }
+
+    getIdExercise() {
+        return idExercise;
     }
 
 }

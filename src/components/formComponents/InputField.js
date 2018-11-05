@@ -13,7 +13,8 @@ export default class InputField extends React.Component {
                     id={this.props.idInput}
                     maxLength={this.props.maxlength}
                     required={this.props.required} 
-                    ref={this.props.idInput} />
+                    ref={this.props.idInput}
+                    placeholder={this.props.mask} />
             </div>
         );
     }

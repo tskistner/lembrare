@@ -1,22 +1,13 @@
 import React from 'react';
-import { Button } from 'reactstrap';
-import { Utils, RadioPainted } from '../../../components';
+import { Utils } from '../../../components';
+import ViewActivity from '../ViewActivity';
 
 export default class Image extends React.Component {
 
-    constructor() {
-        super();
-        this.correctAnswer = null;
-    }
-
-    componentDidUpdate() {
-        //window.scrollTo(0, document.body.scrollHeight);
-    }
-
     buildOptions() {
-        const options = this.props.data.ANSWER.split(';;').map((o,i) => {
+        const options = this.props.data.ANSWER.split(';;').map((o, i) => {
             if (i === 0) {
-                this.correctAnswer = o;
+                Utils.setCorrectAnswer(o);
             }
             return {
                 OPTION: o,
@@ -28,23 +19,20 @@ export default class Image extends React.Component {
 
     render() {
 
-        return (
+        const viewExercise = (
             <div>
                 <h1 className='view title' align='center'>Que imagem é esta?</h1>
                 <div className='exercise-question default'>
                     <img className='exercise image' id='hour' src={'data:image/png;base64,'.concat(this.props.data.B_IMAGEM)} alt='image_exercise' />
                 </div>
-
-                <RadioPainted
-                    idInput={this.props.id}
-                    options={this.buildOptions()} />
-
-                <div align='center'>
-                    <Button onClick={() => this.props.clicks.OK(this.correctAnswer)}>Ok</Button>
-                    <Button onClick={this.props.clicks.CANCEL}>Voltar</Button>
-                </div>
             </div>
         );
+
+        return <ViewActivity
+            viewExercise={viewExercise}
+            options={this.buildOptions()}
+            clicks={this.props.clicks}
+            id={this.props.id} />;
     }
 
 }

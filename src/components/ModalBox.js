@@ -64,7 +64,7 @@ export default class ModalBox extends React.Component {
       <a className='fake-link' onClick={this.toggleOpen}>{this.props.dsLinkToClick}</a> : null;
 
     const ieBtOpen = this.props.ieButtonToClick ?
-      <Button onClick={this.toggleOpen}>{this.props.ieButtonToClick}</Button>
+      <Button onClick={this.toggleOpen} className='button-default' >{this.props.ieButtonToClick}</Button>
       : null;
 
     const hiddenButton = this.props.ieHiddenButton ?
@@ -72,10 +72,10 @@ export default class ModalBox extends React.Component {
         {this.props.ieHiddenButton}</Button> : null;
 
     const btOk = this.props.ieBtOk ?
-      <Button color="secondary" onClick={this.toggleClose}>Ok</Button> : null;
+      <Button color="secondary" className='button-default' onClick={this.toggleClose}>Ok</Button> : null;
 
     const btCancel = this.props.ieBtCancel ?
-      <Button color="secondary" onClick={this.toggleCancel}>Cancelar</Button> : null;
+      <Button color="secondary" className='button-default' onClick={this.toggleCancel}>Cancelar</Button> : null;
 
     return (
       <div>

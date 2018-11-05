@@ -30,6 +30,7 @@ export default class RadioPainted extends React.Component {
         if (this.isChecked(event)) {
             document.getElementById(event.currentTarget.parentElement.parentElement.id).classList.add('hover');
         }
+        this.props.onClick();
     }
 
     render() {
@@ -63,7 +64,7 @@ export default class RadioPainted extends React.Component {
         });
 
         return (
-            <div className="form-group default">
+            <div>
                 {this.props.required}
                 <FormGroup tag="fieldset" id={this.props.idInput} name={this.props.idInput} >
                     {options}

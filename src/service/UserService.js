@@ -3,7 +3,28 @@ import Service from './Service';
 
 class UserService extends Service {
 
-    /* Informações adicionais */
+    /* Usuário */
+    loggin(data) {
+        return new Promise(resolve => {
+            this.sendPost('loggin', 'user', data).then(response => {
+                User.setIdUser(response.data.ID_USER);
+                User.setNameUser(response.data.NM_USER);
+                resolve(response);
+            });
+        });
+    }
+
+    getUser() {
+        return this.send('getUser', 'user');
+    }
+
+    logout() {
+        User.setIdUser(0);
+        User.setNameUser('');
+        return this.send('logout', 'user');
+    }
+
+    /* Familias / Amigos */
     addAditionalInformation(ai) {
         ai.idUsuario = User.getIdUser();
         return this.sendPost('add', 'icomp', ai);
@@ -19,10 +40,14 @@ class UserService extends Service {
     }
 
     deleteAditionalInformation(id) {
-        return this.sendPost('delete', 'icomp', {ID: id, idUsuario: User.getIdUser()});
+        return this.sendPost('delete', 'icomp', { ID: id, idUsuario: User.getIdUser() });
     }
 
-    /* Usuário */
+    /* Cadastro */
+    addUser(u) {
+        return this.sendPost('add', 'user', u);
+    }
+
     updateUser(u) {
         return this.sendPost('update', 'user', u);
     }
@@ -33,6 +58,10 @@ class UserService extends Service {
 
     getUserInformations() {
         return this.sendParam('uByID', 'user', User.getIdUser());
+    }
+
+    updateUserAI(u) {
+        return this.sendPost('updateUAI', 'user', u);
     }
 
     /* Endereço */
@@ -47,11 +76,11 @@ class UserService extends Service {
     }
 
     deleteAddress(id) {
-        return this.sendPost('delete', 'address', {ID: id, idUsuario: User.getIdUser()});
+        return this.sendPost('delete', 'address', { ID: id, idUsuario: User.getIdUser() });
     }
 
     getAllAddress() {
-        return this.sendParam('all', 'address', User.getIdUser()); 
+        return this.sendParam('all', 'address', User.getIdUser());
     }
 
 }

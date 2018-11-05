@@ -14,15 +14,16 @@ export default class Exercise extends React.Component {
         this.state = { exercise: null };
         this.idDivExercise = null;
         this.ieCorrectAnswer = false;
-        this.onClick = this.onClick.bind(this);
-        this.updateLevel = this.updateLevel.bind(this);
+        this.chooseExercise = this.chooseExercise.bind(this);
     }
 
     randomExercise(data) {
         const clicks = {
             OK: this.onClick,
-            CANCEL: this.props.handleClick
+            CANCEL: this.props.handleClick,
+            NEXT: this.chooseExercise
         }
+        Utils.setIdExercise(parseInt(data.EXERCISE));
         switch (data.EXERCISE) {
             case exercises.OBJECT_IDENTIFICATION:
             case exercises.FORM_IDENTIFICATION:
@@ -54,6 +55,7 @@ export default class Exercise extends React.Component {
 
     chooseExercise() {
         const idCategory = this.props.category.substr(this.props.category.lastIndexOf('_') + 1, this.props.category.length)
+        Utils.setIdCategory(idCategory);
         CategoryService.getExercise(idCategory, this.state.idExercise).then(res => {
             this.setState({ exercise: this.randomExercise(res.data), idExercise: res.data.EXERCISE });
         }, err => console.log(err));
@@ -69,35 +71,7 @@ export default class Exercise extends React.Component {
         }, 150);
     }
 
-    updateLevel(response) {
-        const id = this.props.category.substr(this.props.category.lastIndexOf('_') + 1, this.props.category.length)
-        CategoryService.updateLevel({
-            idCategoria: id,
-            idExercicio: this.state.idExercise,
-            ieOpcao: this.ieCorrectAnswer ? 'U' : 'D',
-            idPessoa: response.ID_PARENT,
-            dsBoletim: response.DS_REPORT
-        });
-        this.chooseExercise();
-    }
-
-    onClick(correctAnswer) {
-        Utils.validate(this.idDivExercise, correctAnswer, 'Relatório').then(response => {
-            this.ieCorrectAnswer = response.ATRIBUTE === '0';
-            if (response.BUTTON === 2) {
-                document.getElementById('bt_modal_hidden_exer').click();
-            } else {
-                this.updateLevel(response);
-            }
-        });
-    }
-
     render() {
-        return (
-            <div>
-                {this.state.exercise}
-                <Report onClick={this.updateLevel} />
-            </div>
-        );
+        return this.state.exercise;
     }
 }

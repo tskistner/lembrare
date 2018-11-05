@@ -43,7 +43,8 @@ export default class FormContainer extends React.Component {
                         idInput={f.idInput}
                         placeholder={f.placeholder}
                         maxlength={f.maxlength}
-                        required={f.required ? infRequired : null} />;
+                        required={f.required ? infRequired : null}
+                        mask={f.mask} />;
             }
 
         });

@@ -89,7 +89,7 @@ export default class View extends React.Component {
 
         if ((isEditting || this.props.noGrid) && this.props.modeV) {
             const btCancel = this.registers ?
-                <Button color="secondary" onClick={this.onGrid}>Cancelar</Button> : null;
+                <Button color="secondary" className='button-default' onClick={this.onGrid}>Cancelar</Button> : null;
             mode = (
                 <div>
                     {this.props.modeV}
@@ -119,7 +119,7 @@ export default class View extends React.Component {
         }
 
         return (
-            <div className='col-12 view div'>
+            <div className='col-12 view div default-div'>
                 {this.props.header}
                 {mode}
             </div>

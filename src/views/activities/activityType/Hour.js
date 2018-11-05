@@ -1,14 +1,14 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 import CategoryService from './../../../service/CategoryService';
-import { RadioPainted } from './../../../components';
+import { Utils } from './../../../components';
+import ViewActivity from '../ViewActivity';
 
 export default class Hour extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { imgOptions: null };
-        this.correctAnswer = null;
+        this.state = { imgOptions: null, options: null };
     }
 
     buildOptions(rigthOption) {
@@ -36,7 +36,7 @@ export default class Hour extends React.Component {
         addROption(1);
         addROption(2);
         //adicionar opção correta
-        this.correctAnswer = rigthOption;
+        Utils.setCorrectAnswer(rigthOption);
         options.push({ OPTION: rigthOption, VALUE: 0 });
         return options.sort();
     }
@@ -45,40 +45,31 @@ export default class Hour extends React.Component {
         CategoryService.getImageExcercise(8).then(res => {
             //document.getElementById('ItemPreview').src = 'data:image/png;base64,' + res.data.B_IMAGEM;
             const divC = (
-                <div>
-                    <div align='center'>
-                        <img id='hour' src={'data:image/png;base64,' + res.data.B_IMAGEM} alt='hour' />
-                    </div>
-                    <RadioPainted
-                        idInput={this.props.id}
-                        options={this.buildOptions(res.data.ds_imagem)} />
+                <div align='center'>
+                    <img id='hour' src={'data:image/png;base64,' + res.data.B_IMAGEM} alt='hour' />
                 </div>
             );
 
             this.ds_imagem = res.data.ds_imagem;
             this.ds_valores = res.data.ds_valores;
-            this.setState({ imgOptions: divC });
+            this.setState({ imgOptions: divC, options: this.buildOptions(res.data.ds_imagem) });
         }, err => console.log(err));
-    }
-
-    componentDidUpdate() {
-        //window.scrollTo(0, document.body.scrollHeight);
     }
 
     render() {
 
-        const imgOptions = this.state.imgOptions;
-
-        return (
+        const viewExercise = (
             <div>
                 <h1 className='view title' align='center'>Conforme imagem abaixo, que horas são?</h1>
-                {imgOptions}
-                <div align='center'>
-                    <Button onClick={() => this.props.clicks.OK(this.correctAnswer)}>Ok</Button>
-                    <Button onClick={this.props.clicks.CANCEL}>Voltar</Button>
-                </div>
+                {this.state.imgOptions}
             </div>
         );
+
+        return <ViewActivity
+            viewExercise={viewExercise}
+            options={this.state.options}
+            clicks={this.props.clicks}
+            id={this.props.id} />
     }
 
 }

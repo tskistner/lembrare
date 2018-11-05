@@ -6,7 +6,7 @@ export default class CheckField extends React.Component {
         return (
             <div className="form-group default">
                 {this.props.required}
-                <Label check>
+                <Label check className='checkbox-default'>
                     <Input type="checkbox" 
                         ref={this.props.idInput}
                         id={this.props.idInput} 

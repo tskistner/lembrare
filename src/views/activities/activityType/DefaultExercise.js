@@ -1,18 +1,13 @@
 import React from 'react';
-import { Button } from 'reactstrap';
-import { RadioPainted, Utils } from '../../../components';
+import { Utils } from '../../../components';
+import ViewActivity from '../ViewActivity';
 
 export default class DefaultExercise extends React.Component {
 
-    constructor() {
-        super();
-        this.correctAnswer = null;
-    }
-
     buildOptions() {
-        const options = this.props.data.ANSWER.split(';;').map((o,i) => {
+        const options = this.props.data.ANSWER.split(';;').map((o, i) => {
             if (i === 0) {
-                this.correctAnswer = i;
+                Utils.setCorrectAnswer(o);
             }
             return {
                 OPTION: o,
@@ -22,27 +17,22 @@ export default class DefaultExercise extends React.Component {
         return Utils.shuffle(options);
     }
 
-    getOptions() {
-        return <RadioPainted
-            idInput={this.props.id}
-            options={this.buildOptions()} />
-    }
-
-    componentDidUpdate() {
-        //Utils.scrollToExercise();
-    }
-
     render() {
-        return (
+
+        const viewExercise = (
             <div>
-                <h1 className='view title' align='center'>{this.props.data.DESCRIPTION}</h1>
-                {this.getOptions()}
-                <div align='center'>
-                    <Button onClick={() => this.props.clicks.OK(this.correctAnswer)}>Ok</Button>
-                    <Button onClick={this.props.clicks.CANCEL}>Voltar</Button>
+                <h1 className='view title' align='center'>Questões pessoais.</h1>
+                <div className='exercise-question default'>
+                    <p>{this.props.data.DESCRIPTION}</p>
                 </div>
             </div>
         );
+
+        return <ViewActivity
+            viewExercise={viewExercise}
+            options={this.buildOptions()}
+            clicks={this.props.clicks}
+            id={this.props.id} />;
     }
 
 }

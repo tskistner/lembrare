@@ -2,7 +2,7 @@ import React from 'react';
 import { View, FormContainer, Utils } from './../../components/';
 import UserService from './../../service/UserService';
 
-export default class LoginControl extends React.Component {
+export default class FamilyFriends extends React.Component {
 
   constructor(props) {
     super(props);
@@ -22,7 +22,7 @@ export default class LoginControl extends React.Component {
     const ai = {
       idPessoa: Utils.getValue('ai_id_pessoa'),
       nmPessoa: Utils.getValue('ai_nm_pessoa'),
-      dtNascimento: Utils.getValue('ai_dt_nascimento')
+      dtNascimento: Utils.getDateValue('ai_dt_nascimento')
     }
 
     if (id) {
@@ -45,12 +45,12 @@ export default class LoginControl extends React.Component {
 
     if (parentOptions) {
       const mode = (
-        <div id='cInformationDiv'>
+        <div id='camilyFriendsDiv'>
           <FormContainer
             fields={[
               { type: 'select', idInput: 'ai_id_pessoa', placeholder: 'Grau parentesco', required: true, options: parentOptions },
               { type: 'text', idInput: 'ai_nm_pessoa', placeholder: 'Nome', required: true },
-              { type: 'date', idInput: 'ai_dt_nascimento', placeholder: 'Data de nascimento', required: true }
+              { type: 'date', idInput: 'ai_dt_nascimento', placeholder: 'Data de nascimento' }
             ]} />
         </div>
       );
@@ -59,7 +59,7 @@ export default class LoginControl extends React.Component {
         <View modeV={mode}
           registers={registers}
           headerGrid={['Nome', 'Data Nascimento', 'Grau parentesco']}
-          id='cInformationDiv'
+          id='familyFriendsDiv'
           onSave={this.onSave}
           onDelete={this.onDelete} />
       );

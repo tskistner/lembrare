@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from 'reactstrap';
-import { ButtonImage, RadioPainted, Utils } from './../../../components';
+import { ButtonImage, Utils } from './../../../components';
+import ViewActivity from '../ViewActivity';
 
 export default class ObjectIdentification extends React.Component {
 
@@ -9,33 +9,23 @@ export default class ObjectIdentification extends React.Component {
         this.qtActualElements = 0;
         this.qtElements = 0;
         this.updateQtElements = this.updateQtElements.bind(this);
-        this.options = null;
-        this.state = { identifyForm: null };
         this.icon = null;
-        this.correctAnswer = null;
     }
 
     buildOptions() {
         const options = this.props.data.ANSWER.split(';;').map((a, i) => {
             if (i === 0) {
-                this.correctAnswer = a;
+                Utils.setCorrectAnswer(a);
             }
             return { OPTION: a, VALUE: i };
         });
-        return <RadioPainted
-            idInput={this.props.id}
-            options={Utils.shuffle(options)} />
+        return Utils.shuffle(options);
     }
 
     updateQtElements() {
         this.qtActualElements++;
         if (this.qtActualElements === this.qtElements) { //selected all right forms
-            this.setState({
-                identifyForm: <div>
-                    <h3 className='view title' align='center'> Qual o objeto formado? </h3>
-                    {this.buildOptions()}
-                </div>
-            });
+            document.getElementById('bt_next').hidden = false;
         }
     }
 
@@ -72,29 +62,31 @@ export default class ObjectIdentification extends React.Component {
         });
     }
 
-    componentDidUpdate() {
-        //Utils.scrollToExercise();
+    componentDidMount() {
+        document.getElementById('bt_next').hidden = true;
     }
 
     render() {
-
         if (!this.icon) {
             this.icon = this.getRandomIcon();
         }
 
-        return (
+        const viewExercise = (
             <div>
-                <h1 className='view title' align='center'>{'Escolha as imagens que possuem um(a) '.concat(this.icon[1])}</h1>
+                <h1 className='view title' align='center'>
+                    {'Escolha as imagens que possuem um(a) '.concat(this.icon[1]).concat(' e depois identifique o objeto formado.')}
+                </h1>
                 <div className='exercise-question default'>
                     {this.buildButtons(this.icon[0])}
                 </div>
-                {this.state.identifyForm}
-                <div align='center'>
-                    <Button onClick={() => this.props.clicks.OK(this.correctAnswer)}>Ok</Button>
-                    <Button onClick={this.props.clicks.CANCEL}>Voltar</Button>
-                </div>
             </div>
         );
+
+        return <ViewActivity
+            viewExercise={viewExercise}
+            options={this.buildOptions()}
+            clicks={this.props.clicks}
+            id={this.props.id} />;
     }
 
 }
