@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from 'reactstrap';
-import { Utils, RadioPainted } from '../../../components';
+import { Utils } from '../../../components';
 import ViewActivity from '../ViewActivity';
 
 export default class Word extends React.Component {

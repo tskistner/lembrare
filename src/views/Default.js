@@ -44,26 +44,46 @@ export default class Default extends React.Component {
     let buttonMenu;
     let userInfo;
     let loggout;
-    
+    let headder;
+    let footer;
+
     if (User.getIdUser() > 0 || this.setState.idUser > 0) {
       context = (
-        <div id='main_div' className='default-div white'>
+        <div id='main_div' className='default-div'>
           <Switch>
             {routes}
           </Switch>
         </div>
       );
 
-      buttonMenu = <Button className='menu-button' onClick={this.onClickMenu}></Button>;
+      buttonMenu = <Button className='menu button' onClick={this.onClickMenu}></Button>;
       userInfo = (
-        <div className='info-navbar user-navbar'>
+        <div align='right' className='info-navbar user-navbar'>
           <span>Bem-vindo {User.getNameUser()}</span>
         </div>
       );
       loggout = (
-        <div className='info-navbar logout-navbar'>
+        <div align='right' className='info-navbar logout-navbar'>
           <span onClick={this.logout} >Sair</span>
         </div>
+      );
+
+      headder = (
+        <header className='navbar navbar-expand-lg default '>
+          {buttonMenu}
+          <p>   </p>
+          <p className='title-app'>Lembrare</p>
+          {userInfo}
+          {loggout}
+        </header>
+      );
+
+      footer = (
+        <footer align='right' className='footer footer-dark'>
+          <div className='container'>
+            <p>Desenvolvido por Tamires Schloegel Kistner</p>
+          </div>
+        </footer>
       );
     } else {
       context = <Loggin />;
@@ -73,12 +93,7 @@ export default class Default extends React.Component {
     return (
       <div className='default-app'>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <header className='navbar navbar-expand-lg default '>
-          {buttonMenu}
-          <p className='title-navbar'>Lembrare</p>
-          {userInfo}
-          {loggout}
-        </header>
+        {headder}
         <div id='menu-div' className='menu-div' onClick={this.hideMenu} onMouseLeave={this.hideMenu} hidden >
           <LinkMenu to='cadastro' name='Cadastro' />
           <LinkMenu to='atividades' name='Atividades' />
@@ -87,13 +102,7 @@ export default class Default extends React.Component {
         <main>
           {context}
         </main>
-        <footer className='footer footer-dark'>
-          <div className='container'>
-            <span className='text-muted'>
-              Desenvolvido por Tamires Schloegel Kistner
-            </span>
-          </div>
-        </footer>
+        {footer}
       </div>
     );
   }

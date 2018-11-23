@@ -23,11 +23,11 @@ export default class Sound extends React.Component {
             <div>
                 <h1 className='view title' align='center'>Que som é este?</h1>
                 <div className='exercise-question default'>
-                    <p>Pressione o botão
+                    <p>Pressione o botão    
                     <img src={require('../../../icons/excercises/play.png')} alt='play' />
-                        para ouvir o áudio.</p>
+                           para ouvir o áudio.</p>
                 </div>
-
+                <div className='margens'></div>
                 <div align='center'>
                     <audio controls>
                         <source src={'data:audio/mpeg;base64,'.concat(this.props.data.B_SOUND)} controls />

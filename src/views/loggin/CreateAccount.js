@@ -23,7 +23,9 @@ export default class CreateAccount extends React.Component {
         return true;
     }
 
-
+    onCancel() {
+        window.location.href = "http://localhost:3000/";
+    }
 
     onSave() {
         if (Utils.validateRequiredFields('create-user') && this.validatePassword()) {
@@ -59,42 +61,48 @@ export default class CreateAccount extends React.Component {
     render() {
         const id = 'create_user_';
         return (
-            <div className='default-div white' id='create-user'>
-                <div className='col-12 view div margin' >
-                    <FormContainer fields={[
-                        { type: 'text', idInput: id + 'nm_pessoa', placeholder: 'Nome Completo', required: true },
-                        { type: 'text', idInput: id + 'ds_cpf', placeholder: 'CPF', maxlength: 11, required: true, mask: '___.___.___-__' },
-                        { type: 'date', idInput: id + 'dt_nascimento', placeholder: 'Data de nascimento', required: true },
-                        {
-                            type: 'radio', idInput: id + 'ie_sexo', placeholder: 'Sexo', required: true,
-                            options: [{ OPTION: 'Feminino', VALUE: 'f' }, { OPTION: 'Masculino', VALUE: 'm' }]
-                        },
-                        { type: 'text', idInput: id + 'ds_cidade_natal', placeholder: 'Cidade natal', required: true },
-                        { type: 'text', idInput: id + 'ds_cidade_atual', placeholder: 'Cidade Atual', required: true },
-                        { type: 'text', idInput: id + 'ds_endereco', placeholder: 'Endereço', required: true },
-                        { type: 'number', idInput: id + 'nr_telefone', placeholder: 'Telefone', maxlength: 11, mask: '(__) ____-____', required: true }
-                    ]} />
-                    <div className='div-group borderG'>
-                        <div className='div-group'>
-                            <FormContainer fields={[
-                                { type: 'select', idInput: id + 'ie_fase', placeholder: 'Fase do Alzheimer', options: this.buildOptions() },
-                                { type: 'text', idInput: id + 'qt_tempo', placeholder: 'Tempo da doença' },
-                                { type: 'check', idInput: id + 'ie_antecedentes', placeholder: 'Possui antecedentes' },
-                                { type: 'textarea', idInput: id + 'ds_medicacao', placeholder: 'Medicações' },
-                                { type: 'textarea', idInput: id + 'ds_outras_doencas', placeholder: 'Outras doenças' }
-                            ]} />
+            <div>
+                <div className='margens'></div>
+                <div className='loggin-div'>
+                    <img className='img-logo' src={require('../../icons/logo.png')} alt='logo' />
+                    <div className='loggin-div-inside'>
+                        <FormContainer fields={[
+                            { type: 'text', idInput: id + 'nm_pessoa', placeholder: 'Nome Completo', required: true },
+                            { type: 'text', idInput: id + 'ds_cpf', placeholder: 'CPF', maxlength: 11, required: true, mask: '___.___.___-__' },
+                            { type: 'date', idInput: id + 'dt_nascimento', placeholder: 'Data de nascimento', required: true },
+                            {
+                                type: 'radio', idInput: id + 'ie_sexo', placeholder: 'Sexo', required: true,
+                                options: [{ OPTION: 'Feminino', VALUE: 'f' }, { OPTION: 'Masculino', VALUE: 'm' }]
+                            },
+                            { type: 'text', idInput: id + 'ds_cidade_natal', placeholder: 'Cidade natal', required: true },
+                            { type: 'text', idInput: id + 'ds_cidade_atual', placeholder: 'Cidade Atual', required: true },
+                            { type: 'text', idInput: id + 'ds_endereco', placeholder: 'Endereço', required: true },
+                            { type: 'number', idInput: id + 'nr_telefone', placeholder: 'Telefone', maxlength: 11, mask: '(__) ____-____', required: true }
+                        ]} />
+                        <div className='div-group borderG'>
+                            <div className='div-group'>
+                                <FormContainer fields={[
+                                    { type: 'select', idInput: id + 'ie_fase', placeholder: 'Fase do Alzheimer', options: this.buildOptions() },
+                                    { type: 'text', idInput: id + 'qt_tempo', placeholder: 'Tempo da doença' },
+                                    { type: 'check', idInput: id + 'ie_antecedentes', placeholder: 'Possui antecedentes' },
+                                    { type: 'textarea', idInput: id + 'ds_medicacao', placeholder: 'Medicações' },
+                                    { type: 'textarea', idInput: id + 'ds_outras_doencas', placeholder: 'Outras doenças' }
+                                ]} />
+                            </div>
                         </div>
-                    </div>
-                    <div className='div-group borderG'>
-                        <div className='div-group'>
-                            <FormContainer fields={[
-                                { type: 'check', idInput: id + 'ie_use_pwd', placeholder: 'Utilizar senha para logar', ieChecked: this.ieUsePwd },
-                                { type: 'password', idInput: id + 'ds_senha', placeholder: 'Senha' },
-                                { type: 'password', idInput: id + 'ds_rep_senha', placeholder: 'Repetir senha' }
-                            ]} />
+                        <div className='div-group borderG'>
+                            <div className='div-group'>
+                                <FormContainer fields={[
+                                    { type: 'check', idInput: id + 'ie_use_pwd', placeholder: 'Utilizar senha para logar', ieChecked: this.ieUsePwd },
+                                    { type: 'password', idInput: id + 'ds_senha', placeholder: 'Senha' },
+                                    { type: 'password', idInput: id + 'ds_rep_senha', placeholder: 'Repetir senha' }
+                                ]} />
+                            </div>
                         </div>
+                        <Button onClick={this.onSave} className='button-default all' > Salvar </Button>
+                        {'     '}
+                        <Button onClick={this.onCancel} className='button-default all' > Cancelar </Button>
                     </div>
-                    <Button onClick={this.onSave} className='button-default' > Salvar </Button>
                 </div>
             </div>
         );

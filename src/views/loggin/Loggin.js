@@ -35,17 +35,22 @@ export default class Loggin extends React.Component {
             return <CreateAccount />;
         } else {
             return (
-                <div className='loggin-div'>
-                    <div className='loggin-div-inside'>
-                        <FormContainer
-                            fields={[
-                                { type: 'text', idInput: 'loggin_cpf', placeholder: 'CPF', maxlength: 11, mask: '___.___.___-__' },
-                                { type: 'password', idInput: 'loggin_pwd', placeholder: 'Senha' }
-                            ]} />
-                        <div align='center'>
-                            <Button onClick={this.loggin} className='button-default'>Entrar</Button>
+                <div>
+                    <div className='margens'></div>
+                    <div className='loggin-div'>
+                        <img className='img-logo' src={require('../../icons/logo.png')} alt='logo' />
+                        <div className='loggin-div-inside'>
+                            <FormContainer
+                                fields={[
+                                    { type: 'text', idInput: 'loggin_cpf', placeholder: 'CPF', maxlength: 11, mask: '___.___.___-__' },
+                                    { type: 'password', idInput: 'loggin_pwd', placeholder: 'Senha' }
+                                ]} />
                             {'     '}
-                            <Button onClick={this.createAccount} className='button-default'>Criar conta</Button>
+                            <div align='center'>
+                                <Button onClick={this.loggin} className='button-default all'>Entrar</Button>
+                                {'     '}
+                                <Button onClick={this.createAccount} className='button-default all'>Criar conta</Button>
+                            </div>
                         </div>
                     </div>
                 </div>

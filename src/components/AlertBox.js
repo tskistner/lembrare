@@ -24,7 +24,7 @@ class AlertBox {
 
             message.innerHTML = context;
             button.textContent = 'Ok';
-            button.className = 'button-default btn btn-secondary';
+            button.className = 'button-default all btn btn-secondary';
             button.onclick = () => {
                 const element = document.getElementById('message_box');
                 document.getElementsByTagName('body')[0].removeChild(element);
@@ -34,7 +34,7 @@ class AlertBox {
             if (btAditional) {
                 const otherButton = document.createElement('button');
                 otherButton.textContent = btAditional;
-                otherButton.className = 'button-default btn btn-secondary';
+                otherButton.className = 'button-default all btn btn-secondary';
                 otherButton.onclick = () => {
                     const element = document.getElementById('message_box');
                     document.getElementsByTagName('body')[0].removeChild(element);

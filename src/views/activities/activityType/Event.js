@@ -30,11 +30,12 @@ export default class Event extends React.Component {
     }
 
     onNext() {
-        if (!this.state.secondPart) {
+        this.props.clicks.CANCEL();
+        /*if (!this.state.secondPart) {
             this.setState({ secondPart: true });
         } else {
             this.props.clicks.CANCEL();
-        }
+        }*/
     }
 
     render() {
@@ -81,7 +82,7 @@ export default class Event extends React.Component {
             return <ViewActivity
                 viewExercise={viewExercise}
                 options={this.buildOptions(answers[0])}
-                clicks={{ CANCEL: this.onNext }}
+                clicks={this.props.clicks}
                 id={this.props.id} />;
         }
     }

@@ -24,9 +24,10 @@ export default class ObjectIdentification extends React.Component {
 
     updateQtElements() {
         this.qtActualElements++;
+        document.getElementById('qt_score').innerHTML = this.qtElements - this.qtActualElements;
         if (this.qtActualElements === this.qtElements) { //selected all right forms
-            document.getElementById('bt_next').hidden = false;
-        }
+            document.getElementById('bt_next').classList.remove('disabled');
+        } 
     }
 
     getRandomIcon() {
@@ -63,7 +64,7 @@ export default class ObjectIdentification extends React.Component {
     }
 
     componentDidMount() {
-        document.getElementById('bt_next').hidden = true;
+        document.getElementById('bt_next').classList.add('disabled');
     }
 
     render() {
@@ -79,6 +80,10 @@ export default class ObjectIdentification extends React.Component {
                 <div className='exercise-question default'>
                     {this.buildButtons(this.icon[0])}
                 </div>
+                <div className='score'>
+                    <p id='qt_score'> {(this.qtElements - this.qtActualElements)} </p>
+                </div>
+                
             </div>
         );
 

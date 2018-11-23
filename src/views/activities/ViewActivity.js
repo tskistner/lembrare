@@ -25,7 +25,7 @@ export default class ViewActivity extends React.Component {
                 let message;
                 if (isCorrect) {
                     message = (
-                        <div className='exercise-question default exercise-options'>
+                        <div className='exercise-question default'>
                             <img src={require('../../icons/excercises/congrats.png')} alt='congrats' />
                             <h2>Parabéns!</h2>
                             <p>A resposta está correta</p>
@@ -33,7 +33,7 @@ export default class ViewActivity extends React.Component {
                     );
                 } else {
                     message = (
-                        <div className='exercise-question default exercise-options'>
+                        <div className='exercise-question default'>
                             <img src={require('../../icons/excercises/sorry.png')} alt='sorry' />
                             <p>Infelizmente a resposta está incorreta.</p>
                             <p>{'Resposta correta: '.concat(Utils.getCorrectAnswer())}</p>
@@ -75,31 +75,38 @@ export default class ViewActivity extends React.Component {
     render() {
         if (this.state.isFinal) {
             setTimeout(() => {
-                this.state.isFinal = false;
-                this.state.isOptions = false;
+                this.setState({ isFinal: false, isOptions : false });
                 this.props.clicks.NEXT();
             }, 3500);
             return this.state.msgFinal;
-        } else if (this.state.isOptions) {
-            return this.getOptions('Qual a resposta?', this.props.options);
         } else {
+            let body, btNext;
+            if (this.state.isOptions) {
+                body = this.getOptions('Qual a resposta?', this.props.options);
+
+                btNext = <img src={require('../../icons/next.png')}
+                    className='exercise-button disabled' id='bt_next' alt='next' />;
+            } else {
+                body = this.props.viewExercise;
+
+                btNext = <img src={require('../../icons/next.png')}
+                    className='exercise-button enabled' id='bt_next' alt='next' onClick={this.onNext} />;
+            }
+
             return (
                 <div>
-                    {this.props.viewExercise}
+                    {body}
                     <footer align='center' className='exercise default'>
                         <img src={require('../../icons/back.png')}
-                            className='exercise-button'
+                            className='exercise-button enabled'
                             onClick={this.onBack}
                             id='bt_back'
                             alt='back' />
                         {'      '}
-                        <img src={require('../../icons/next.png')}
-                            className='exercise-button'
-                            onClick={this.onNext}
-                            id='bt_next'
-                            alt='next' />
+                        {btNext}
                     </footer>
-                </div>);
+                </div>
+            )
         }
     }
 }

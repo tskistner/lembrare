@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { View, FormContainer, ModalBox, Utils, AlertBox } from './../../components/';
+import { View, FormContainer, Utils } from './../../components/';
 import UserService from './../../service/UserService';
 import User from './../../repository/User';
-
-let configPassword = {};
 
 export default class AditionalInformation extends Component {
 

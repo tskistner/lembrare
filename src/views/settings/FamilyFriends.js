@@ -45,7 +45,7 @@ export default class FamilyFriends extends React.Component {
 
     if (parentOptions) {
       const mode = (
-        <div id='camilyFriendsDiv'>
+        <div id='familyFriendsDiv'>
           <FormContainer
             fields={[
               { type: 'select', idInput: 'ai_id_pessoa', placeholder: 'Grau parentesco', required: true, options: parentOptions },

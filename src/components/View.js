@@ -1,5 +1,5 @@
 import React from 'react';
-import { GridMode, ModalBox } from './';
+import { GridMode } from './';
 import { Button } from 'reactstrap';
 import Utils from './Utils';
 
@@ -38,7 +38,7 @@ export default class View extends React.Component {
     //Salvar informações. Chama método passado nas propriedades, para ser tratado dentro de cada view
     //Após salvar/atualizar informação, é atualizado os registros do grid
     onSave() {
-        if (this.validate()) {
+        if (Utils.validateRequiredFields(this.props.id)) {
             this.props.onSave(this.registerActual ? this.registerActual[0].VALUE : null).then(res => {
                 this.registers = res.data;
                 this.setState({ isEditting: false });
@@ -89,18 +89,13 @@ export default class View extends React.Component {
 
         if ((isEditting || this.props.noGrid) && this.props.modeV) {
             const btCancel = this.registers ?
-                <Button color="secondary" className='button-default' onClick={this.onGrid}>Cancelar</Button> : null;
+                <Button color="secondary" className='button-default all' onClick={this.onGrid}>Cancelar</Button> : null;
             mode = (
                 <div>
                     {this.props.modeV}
                     <form align='center'>
                         <footer>
-                            <ModalBox ieModal={false}
-                                dsTitle='Atenção!'
-                                modalBody={<p>Favor preencher todos os campos obrigatórios!</p>}
-                                ieBtOk={true}
-                                toValidate={this.onSave}
-                                ieButtonToClick={'Salvar'} />
+                            <Button color="secondary" className='button-default all' onClick={this.onSave}>Salvar</Button>
                             {btCancel}
                         </footer>
                     </form>
@@ -108,7 +103,7 @@ export default class View extends React.Component {
         } else {
             mode = (
                 <div>
-                    <GridMode 
+                    <GridMode
                         onEdit={this.onEdit}
                         onDelete={this.onDelete}
                         registers={this.registers}
@@ -119,7 +114,7 @@ export default class View extends React.Component {
         }
 
         return (
-            <div className='col-12 view div default-div'>
+            <div className='col-12 overfloww'>
                 {this.props.header}
                 {mode}
             </div>

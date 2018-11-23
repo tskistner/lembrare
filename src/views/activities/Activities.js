@@ -1,7 +1,6 @@
 import React from 'react';
 import Categories from './Categories';
 import Excercise from './Exercise';
-import { Utils } from '../../components';
 
 export default class Activities extends React.Component {
 
@@ -32,7 +31,7 @@ export default class Activities extends React.Component {
         }
 
         return (
-            <div id='activitiesDiv' className='view div white padd'>
+            <div id='activitiesDiv' className='view div white padd overfloww'>
                 {mode}
             </div>
         );

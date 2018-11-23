@@ -30,7 +30,7 @@ export default class TabContainer extends React.Component {
                 tabsH.push(
                     <NavItem key={i}>
                         <NavLink key={i}
-                            className={classnames({ active: this.state.activeTab === t.id })}
+                            className={classnames({ ativo: this.state.activeTab === t.id })}
                             onClick={() => { this.toggle(t.id); }}>
                             {t.title}
                         </NavLink>
@@ -50,7 +50,7 @@ export default class TabContainer extends React.Component {
 
         return (
             <div>
-                <Nav tabs>
+                <Nav tabs className='nav-itens'>
                     {tabsH}
                 </Nav>
                 <TabContent activeTab={this.state.activeTab}>

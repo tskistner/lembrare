@@ -15,4 +15,6 @@ export { default as TabContainer } from './TabContainer';
 export { default as View } from './View';
 export { default as Utils } from './Utils';
 export { default as AlertBox } from  './AlertBox';
-export { default as LinkMenu } from './menuComponents/LinkMenu'
+export { default as LinkMenu } from './menuComponents/LinkMenu';
+export { default as Chart } from './Chart';
+export { default as PDF } from './PDF';

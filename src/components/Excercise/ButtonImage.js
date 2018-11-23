@@ -3,6 +3,11 @@ import { Button } from 'reactstrap';
 
 export default class ButtonImage extends React.Component {
 
+    constructor () {
+        super();
+        this.ieClicked = false;
+    }
+
     getRandom() {
         const number = Math.floor((Math.random() * 5) + 1);
         return (number === this.props.idValueUp) ? this.getRandom() : number;
@@ -35,6 +40,7 @@ export default class ButtonImage extends React.Component {
 
     onClickButton(id) {
         const element = document.getElementById(id);
+        this.ieClicked = true;
         if (element.classList.contains('i'.concat(this.idImage))) {
             switch (this.props.value) {
                 case '0.5':
@@ -59,6 +65,12 @@ export default class ButtonImage extends React.Component {
                     }, 150);
                     break;
             }
+        }
+    }
+
+    componentDidMount() {
+        if (this.ieClicked) {
+            this.onClickButton('icon_' + this.props.idIconImage);
         }
     }
 

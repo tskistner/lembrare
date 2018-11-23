@@ -60,35 +60,18 @@ export default class ModalBox extends React.Component {
   }
 
   render() {
-    const ieLink = this.props.dsLinkToClick ?
-      <a className='fake-link' onClick={this.toggleOpen}>{this.props.dsLinkToClick}</a> : null;
-
-    const ieBtOpen = this.props.ieButtonToClick ?
-      <Button onClick={this.toggleOpen} className='button-default' >{this.props.ieButtonToClick}</Button>
-      : null;
-
-    const hiddenButton = this.props.ieHiddenButton ?
-      <Button id={'bt_modal_hidden_'.concat(this.props.ieHiddenButton)} onClick={this.toggleOpen} hidden >
-        {this.props.ieHiddenButton}</Button> : null;
-
-    const btOk = this.props.ieBtOk ?
-      <Button color="secondary" className='button-default' onClick={this.toggleClose}>Ok</Button> : null;
-
-    const btCancel = this.props.ieBtCancel ?
-      <Button color="secondary" className='button-default' onClick={this.toggleCancel}>Cancelar</Button> : null;
-
     return (
       <div>
-        {hiddenButton}
-        {ieBtOpen}
-        {ieLink}
+        <a className='fake-link' onClick={this.toggleOpen}>{this.props.dsLinkToClick}</a>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>{this.props.dsTitle}</ModalHeader>
           <ModalBody>
             {this.props.modalBody}
           </ModalBody>
           <ModalFooter>
-            {btOk}{' '}{btCancel}
+            <Button color="secondary" className='button-default all' onClick={this.toggleClose}>Ok</Button>
+            {' '}
+            <Button color="secondary" className='button-default all' onClick={this.toggleCancel}>Cancelar</Button>
           </ModalFooter>
         </Modal>
       </div>

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from 'reactstrap';
-import { RadioPainted, Utils } from './../../../components';
+import { Utils } from './../../../components';
 import ViewActivity from '../ViewActivity';
 
 export default class Calculation extends React.Component {

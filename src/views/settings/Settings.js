@@ -9,7 +9,7 @@ export default class Settings extends React.Component {
     render() {
 
         return (
-            <div className='view div white padd'>
+            <div className='view div white '>
                 <TabContainer firstTable='pi'
                     tabs={
                         [
