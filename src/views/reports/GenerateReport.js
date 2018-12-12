@@ -3,6 +3,7 @@ import { FormContainer, Utils, PDF } from '../../components';
 import { Button } from 'reactstrap';
 import ChartService from '../../service/ChartService';
 import ReportPDF from './ReportPDF';
+import User from '../../repository/User';
 
 export default class GenerateReport extends React.Component {
 
@@ -14,22 +15,20 @@ export default class GenerateReport extends React.Component {
     }
 
     print() {
-        //var printWindow = window.open('', '', 'height=400,width=800');
-        //printWindow.document.write(this.state.report);
-        PDF.generate('relatorio_desempenho', 'chart_report','desempenho');
-       //PDF.teste('relatorio_desempenho');
+        PDF.generate('relatorio_desempenho', 'chart_report',
+            'desempenho_'.concat(User.getIdUser())
+                .concat(Utils.getValue('R_DT_BEGGIN')).concat('_').concat(Utils.getValue('R_DT_FINAL')));
     }
 
     generate() {
-        /*if (Utils.validateRequiredFields('report_settings')) {
-            PDF.generate('relatorio_desempenho', 'desempenho');
-        }*/
-        ChartService.getDataSource({ DT_INICIO: Utils.getValue('R_DT_BEGGIN'), DT_FIM: Utils.getValue('R_DT_FINAL') })
-            .then(res =>
-                this.setState({
-                    report: <ReportPDF data={res.data} />
-                })
-            );
+        if (Utils.validateRequiredFields('report_settings')) {
+            ChartService.getDataSource({ DT_INICIO: Utils.getValue('R_DT_BEGGIN'), DT_FIM: Utils.getValue('R_DT_FINAL') })
+                .then(res =>
+                    this.setState({
+                        report: <ReportPDF data={res.data} />
+                    })
+                );
+        }
     }
 
     render() {
@@ -43,7 +42,10 @@ export default class GenerateReport extends React.Component {
                         ]} />
                     <div align='center'>
                         <Button onClick={this.generate}>Gerar Relatório </Button>
-                        <Button onClick={this.print}>PDF </Button>
+                        {this.state.report ?
+                            <Button onClick={this.print}>Salva PDF </Button>
+                            : null
+                        }
                     </div>
                 </div>
                 {this.state.report}

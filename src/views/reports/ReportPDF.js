@@ -53,7 +53,7 @@ export default class ReportPDF extends React.Component {
                         description='Quantidade de acertos'
                         data={this.props.data.CHART}
                     />
-                </div>*
+                </div>
 
                 <p align='center' className='report title'>Registros</p>
                 <div className='container'>

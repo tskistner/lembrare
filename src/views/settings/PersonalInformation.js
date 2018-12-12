@@ -14,7 +14,7 @@ export default class PersonalInformation extends Component {
     }
 
     //Events
-    onSave() { 
+    onSave() {
         const data = {
             idUsuario: User.getIdUser(),
             nmPessoa: Utils.getValue('nm_pessoa'),
@@ -26,10 +26,8 @@ export default class PersonalInformation extends Component {
             dsEndereco: Utils.getValue('ds_endereco'),
             nrTelefone: Utils.getValue('nr_telefone')
         };
-        if (configPassword.dsSenha) {
-            data.dsSenha = configPassword.dsSenha;
-            data.ieUsarSenha = configPassword.ieUsarSenha;
-        }
+        data.dsSenha = this.configPassword.dsSenha;
+        data.ieUsarSenha = this.configPassword.ieUsarSenha;
         return UserService.updateUser(data);
     }
 
@@ -39,7 +37,7 @@ export default class PersonalInformation extends Component {
             AlertBox.show('<p>Atenção!</p><p>As senhas precisam ser iguais</p>');
             return false;
         } else {
-            configPassword = {
+            this.configPassword = {
                 dsSenha: Utils.getValue('ds_senha'),
                 ieUsarSenha: Utils.getValueCheck('ie_use_pwd')
             }
@@ -58,6 +56,11 @@ export default class PersonalInformation extends Component {
                 Utils.setValue('ds_endereco', resp.data.dsEndereco);
                 Utils.setValue('nr_telefone', resp.data.nrTelefone);
                 Utils.setValueRadio('ie_sexo_'.concat(resp.data.ieSexo));
+                this.configPassword = {
+                    dsSenha: resp.data.dsSenha,
+                    ieUsarSenha: resp.data.ieUsarSenha
+                    
+                }
                 this.ieUsePwd = resp.data.ieUsarSenha === 'S';
             }
         });
@@ -66,9 +69,9 @@ export default class PersonalInformation extends Component {
     render() {
         const modalBody = (
             <FormContainer fields={[
-                { type: 'check', idInput: 'ie_use_pwd', placeholder:'Utilizar senha para logar', ieChecked:this.ieUsePwd},
-                { type: 'password', idInput: 'ds_senha', placeholder:'Senha'},
-                { type: 'password', idInput: 'ds_rep_senha', placeholder:'Repetir senha'}
+                { type: 'check', idInput: 'ie_use_pwd', placeholder: 'Utilizar senha para logar', ieChecked: this.ieUsePwd },
+                { type: 'password', idInput: 'ds_senha', placeholder: 'Senha' },
+                { type: 'password', idInput: 'ds_rep_senha', placeholder: 'Repetir senha' }
             ]} />
         );
 
@@ -76,16 +79,16 @@ export default class PersonalInformation extends Component {
             <div>
                 <FormContainer fields={[
                     { type: 'text', idInput: 'nm_pessoa', placeholder: 'Nome Completo', required: true },
-                    { type: 'text', idInput: 'ds_cpf', placeholder: 'CPF', maxlength: 11, required: true, mask:'___.___.___-__'  },
+                    { type: 'text', idInput: 'ds_cpf', placeholder: 'CPF', maxlength: 11, required: true, mask: '___.___.___-__' },
                     { type: 'date', idInput: 'dt_nascimento', placeholder: 'Data de nascimento', required: true },
-                    { type: 'text', idInput: 'ds_cidade_natal', placeholder: 'Cidade natal',required:true },
+                    { type: 'text', idInput: 'ds_cidade_natal', placeholder: 'Cidade natal', required: true },
                     {
                         type: 'radio', idInput: 'ie_sexo', placeholder: 'Sexo', required: true,
                         options: [{ OPTION: 'feminino', VALUE: 'f' }, { OPTION: 'masculino', VALUE: 'm' }]
                     },
-                    { type: 'text', idInput: 'ds_cidade_atual', placeholder: 'Cidade Atual',required:true },
+                    { type: 'text', idInput: 'ds_cidade_atual', placeholder: 'Cidade Atual', required: true },
                     { type: 'text', idInput: 'ds_endereco', placeholder: 'Endereço' },
-                    { type: 'number', idInput: 'nr_telefone', placeholder: 'Telefone', maxlength:11, mask:'(__) ____-____' }
+                    { type: 'number', idInput: 'nr_telefone', placeholder: 'Telefone', maxlength: 11, mask: '(__) ____-____' }
                 ]} />
                 <ModalBox ieModal={false}
                     dsLinkToClick='Configurações de senha'
@@ -93,7 +96,7 @@ export default class PersonalInformation extends Component {
                     modalBody={modalBody}
                     toValidateClose={this.onBeforeClosePwdConfig}
                     ieBtOk={true}
-                    ieBtCancel={true}/>
+                    ieBtCancel={true} />
             </div>
         );
 
@@ -104,8 +107,8 @@ export default class PersonalInformation extends Component {
         );
 
         return (
-        <View modeV={modeV} id='pInformationDiv' 
-                onSave={this.onSave} 
+            <View modeV={modeV} id='pInformationDiv'
+                onSave={this.onSave}
                 noGrid={true} />
         );
     }
